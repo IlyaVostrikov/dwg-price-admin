@@ -14,6 +14,13 @@ def get_backend() -> SqliteBackend:
     return SqliteBackend(os.getenv('DB_PATH', 'pricelist.db'))
 
 
+def brand_map_name(bid: str, brands: list[dict]) -> str:
+    for b in brands:
+        if b['id'] == bid:
+            return b['title_ru']
+    return bid
+
+
 st.title('Управление видимостью')
 
 backend = get_backend()
@@ -148,10 +155,3 @@ with tab2:
             st.success(f'Бренд «{brand_name}» удалён')
             st.cache_resource.clear()
             st.rerun()
-
-
-def brand_map_name(bid: str, brands: list[dict]) -> str:
-    for b in brands:
-        if b['id'] == bid:
-            return b['title_ru']
-    return bid
