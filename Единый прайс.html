@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Прайс-лист — ООО «Компания Кофе и Чая»</title>
+<style>
+    :root {
+      --bg: #f1f1ee;
+      --paper: #ffffff;
+      --ink: #1f2328;
+      --muted: #6b7076;
+      --line: #ded8ce;
+      --line-strong: #c9bca8;
+      --gold: #c6a15b;
+      --gold-dark: #9d7730;
+      --coffee: #3a2b22;
+      --red: #c82127;
+      --teal: #167b84;
+      --cream: #fbf7ee;
+      --shadow: 0 18px 42px rgba(31,35,40,.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.35;
+    }
+    .doc { max-width: 1180px; margin: 24px auto; background: var(--paper); box-shadow: var(--shadow); }
+    .hero {
+      background: linear-gradient(135deg, #161719 0%, #2d241c 58%, #47351e 100%);
+      color: #fff;
+      padding: 34px 42px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; right: -80px; top: -90px; width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(198,161,91,.34), rgba(198,161,91,0) 70%);
+    }
+    .kicker { color: #d8bc7b; text-transform: uppercase; letter-spacing: .18em; font-size: 12px; font-weight: 800; }
+    h1 { margin: 8px 0 8px; font-size: 42px; line-height: 1.05; letter-spacing: -.035em; }
+    .lead { margin: 0; max-width: 760px; color: #e6e0d6; font-size: 16px; }
+    .meta { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .pill { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 7px 12px; font-size: 12px; color: #f5f0e8; background: rgba(255,255,255,.06); }
+    .nav { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); padding: 12px 42px; display: flex; gap: 10px; flex-wrap: wrap; backdrop-filter: blur(8px); }
+    .nav a { text-decoration: none; color: var(--ink); font-weight: 800; font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; background: var(--cream); }
+    .nav a:hover { border-color: var(--gold); color: var(--gold-dark); }
+    .summary { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 22px 42px 8px; }
+    .summary-card { background: var(--cream); border: 1px solid var(--line); border-radius: 16px; padding: 14px; min-height: 86px; }
+    .summary-card strong { font-size: 24px; color: var(--gold-dark); display: block; }
+    .summary-card span { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .summary-card .icon { font-size: 22px; margin-bottom: 2px; }
+    .section { padding: 28px 42px 16px; page-break-before: always; }
+    .section:first-of-type { page-break-before: auto; }
+    .section-head { display: flex; align-items: center; gap: 14px; border-bottom: 2px solid var(--line); padding-bottom: 12px; margin-bottom: 18px; }
+    .section-icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--coffee); color: #fff; font-size: 24px; }
+    .section h2 { margin: 0; font-size: 30px; line-height: 1; }
+    .section-sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .brand-card { border: 1px solid var(--line); border-radius: 18px; margin: 18px 0 26px; overflow: hidden; background: #fff; page-break-inside: avoid; }
+    .brand-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; background: linear-gradient(180deg, #fff, #fbf8f1); border-bottom: 1px solid var(--line); padding: 18px 20px; }
+    .brand-card h3 { margin: 0; font-size: 22px; line-height: 1.15; }
+    .brand-card-head p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+    .count { min-width: 58px; text-align: center; border-radius: 14px; background: var(--teal); color: #fff; font-size: 24px; font-weight: 900; padding: 8px 10px; line-height: 1; }
+    .count span { display: block; font-size: 10px; font-weight: 800; margin-top: 4px; text-transform: uppercase; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.4px; }
+    th { background: #2b2f33; color: #fff; text-align: center; padding: 9px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; vertical-align: top; }
+    td { border-top: 1px solid var(--line); padding: 8px 10px; vertical-align: top; }
+    tbody tr:nth-child(even) td { background: #fbfaf7; }
+    tbody tr:hover td { background: #fff6df; }
+    td:last-child { font-weight: 800; color: #245d38; white-space: nowrap; }
+    .compact td { padding: 6px 10px; }
+    .source { display: block; padding: 10px 20px 14px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--line); background: #fbfbfa; }
+    .note { padding: 0 20px; color: var(--muted); font-size: 12px; }
+    .footer { padding: 28px 42px 34px; background: #161719; color: #fff; }
+    .footer strong { color: #d8bc7b; }
+    .small { color: #c9c9c9; font-size: 12px; margin-top: 10px; }
+
+    .price-table th:not(:first-child) { text-align: center; vertical-align: middle; }
+    .price-table td:not(:first-child) { text-align: center; }
+    .price-table td:nth-last-child(-n+2) { font-weight: 800; color: #245d38; white-space: nowrap; }
+    @page { size: A4; margin: 11mm; }
+    @media print {
+      body { background: #fff; }
+      .doc { box-shadow: none; margin: 0; max-width: none; }
+      .nav { display: none; }
+      .hero { padding: 18mm 12mm 12mm; }
+      h1 { font-size: 30px; }
+      .summary { grid-template-columns: repeat(5, 1fr); padding: 8mm 0 0; gap: 6px; }
+      .section { padding: 10mm 0 0; }
+      .brand-card { break-inside: avoid; page-break-inside: avoid; }
+      table { font-size: 8.7px; }
+      th { font-size: 7.6px; padding: 5px; }
+      td { padding: 4px 5px; }
+      .section h2 { font-size: 24px; }
+      .brand-card h3 { font-size: 17px; }
+      .count { font-size: 18px; }
+    }
+    @media (max-width: 800px) {
+      .doc { margin: 0; }
+      .hero, .nav, .section, .summary, .footer { padding-left: 18px; padding-right: 18px; }
+      h1 { font-size: 31px; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .brand-card-head { flex-direction: column; }
+    }
+  
+
+    th { text-align: center; vertical-align: middle; }
+    th.name-col { text-align: left; }
+</style>
+</head>
+<body>
+<div class="doc">
+<header class="hero">
+<div class="kicker">ООО «Компания Кофе и Чая» / Don’t Worry Group</div>
+<h1>Прайс-лист</h1>
+<p class="lead">Ассортимент для HoReCa, офисов, ресторанов, отелей и корпоративных клиентов: кофе, чай, молоко и альтернатива, сиропы и кордиалы, вода и напитки.</p>
+</header>
+<nav class="nav">
+<a href="#coffee">☕ Кофе</a><a href="#tea">🍃 Чай</a><a href="#milk">🥛 Молоко / альтернатива</a><a href="#syrups">🍹 Сиропы / кордиалы</a><a href="#water">💧 Вода / напитки</a>
+</nav>
+<section class="summary">
+<div class="summary-card"><div class="icon">☕</div><strong>34</strong><span>Кофе</span></div><div class="summary-card"><div class="icon">🍃</div><strong>71</strong><span>Чай</span></div><div class="summary-card"><div class="icon">🥛</div><strong>14</strong><span>Молоко / альтернатива</span></div><div class="summary-card"><div class="icon">🍹</div><strong>225</strong><span>Сиропы / кордиалы</span></div><div class="summary-card"><div class="icon">💧</div><strong>53</strong><span>Вода / напитки</span></div>
+</section>
+<section class="section" id="coffee">
+<div class="section-head">
+<div class="section-icon">☕</div>
+<div>
+<h2>Кофе</h2>
+</div>
+</div>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Portioli — премиальный итальянский кофе</h3>
+<p>Espresso blends, зерно 1000 г</p>
+</div>
+<div class="count">6<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>ВИД</th><th>МАССА</th><th>СОСТАВ</th><th>СТЕПЕНЬ ОБЖАРКИ</th><th>ДЕСКРИПТОРЫ</th><th>Цена с арендой, руб</th><th>Цена без аренды, руб</th></tr></thead><tbody><tr><td>Кофе Portioli Top</td><td>Зерно</td><td>1000 г</td><td>100% Арабика</td><td>Тёмная</td><td>Сладкие Фрукты</td><td>4 360 ₽</td><td>3 370 ₽</td></tr><tr><td>Portioli Extra Bar</td><td>Зерно</td><td>1000 г</td><td>70% Арабика / 30% Робуста</td><td>Тёмная</td><td>Молочный шоколад, косточковые ягоды</td><td>4 080 ₽</td><td>3 180 ₽</td></tr><tr><td>Portioli Aroma</td><td>Зерно</td><td>1000 г</td><td>50% Арабика / 50% Робуста</td><td>Тёмная</td><td>шоколад, орехи, какао</td><td>3 880 ₽</td><td>2 955 ₽</td></tr><tr><td>Portioli Gusto</td><td>Зерно</td><td>1000 г</td><td>35% Арабика / 65% Робуста</td><td>Тёмная</td><td>Какао, горький шоколад, свежий табак</td><td>3 670 ₽</td><td>2 780 ₽</td></tr><tr><td>Portioli Soave</td><td>Зерно</td><td>1000 г</td><td>20% Арабика / 80% Робуста</td><td>Тёмная</td><td>Какао, горький шоколад, свежий табак</td><td>3 350 ₽</td><td>2 610 ₽</td></tr><tr><td>Portioli Gran Miscela Premium</td><td>Зерно</td><td>1000 г</td><td>60% Арабика / 40% Робуста</td><td>Тёмная</td><td>табак, горький шоколад</td><td>2 850 ₽</td><td>2 140 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Portioli — сопутствующая продукция</h3>
+<p>Сахар, молотый кофе</p>
+</div>
+<div class="count">2<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">Наименование</th><th>Вид / Фасовка</th><th>Вес нетто</th><th>Цена, руб</th><th>Примечание</th></tr></thead><tbody><tr><td>Сахар в стиках Portioli (5г / 2000шт в коробке)</td><td>стики</td><td>10 кг.</td><td>2 150 ₽</td><td>под заказ</td></tr><tr><td>Portioli 250g в банках</td><td>молотый</td><td>250 г</td><td>1 440 ₽</td><td>под заказ</td></tr></tbody></table></div>
+</article><article class="brand-card"><div class="brand-card-head"><div><h3>Ristora — горячий шоколад</h3><p>Смеси для горячего шоколада и напитков</p></div><div class="count">2<span>поз.</span></div></div><div class="table-wrap"><table class="price-table"><thead><tr><th class="n a m e - c o l name-col">Наименование</th><th>Вид / фасовка</th><th>Вес нетто</th><th>Цена, руб</th><th>Примечание</th></tr></thead><tbody><tr><td>Горячий шоколад Ristora</td><td>порошок</td><td>1000 г</td><td>2 300 ₽</td><td>под заказ</td></tr><tr><td>Ristora Dabb</td><td>порошок</td><td>1000 г</td><td>—</td><td>под заказ</td></tr></tbody></table></div></article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>R.E.D. — кофе в зернах</h3>
+<p>Specialty и классические бленды, цена за 1000 г</p>
+</div>
+<div class="count">21<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>РЕГИОН</th><th>ОБЖАРКА</th><th>ДЕСКРИПТОРЫ</th><th>Цена с арендой, руб</th><th>Цена без аренды, руб</th></tr></thead><tbody><tr><td>R.E.D. 5</td><td>Бразилия</td><td>Средняя</td><td>Шоколад, орехи</td><td>3 700 ₽</td><td>2 800 ₽</td></tr><tr><td>R.E.D. 6</td><td>Бразилия / Вьетнам</td><td>Средняя</td><td>Какао, тёмный шоколад, табак</td><td>2 610 ₽</td><td>1 940 ₽</td></tr><tr><td>R.E.D. 6 RED NEW</td><td>Бразилия / Вьетнам</td><td>Тёмная</td><td>Шоколад, фрукты</td><td>2 430 ₽</td><td>1 840 ₽</td></tr><tr><td>R.E.D. 7 (100% Arabica)</td><td>Вьетнам Далат</td><td>Тёмная</td><td>Тёмный шоколад, карамель, специи</td><td>3 100 ₽</td><td>2 370 ₽</td></tr><tr><td>R.E.D. 9</td><td>Бразилия / Вьетнам</td><td>Тёмная</td><td>Орехи, шоколад</td><td>3 100 ₽</td><td>2 360 ₽</td></tr><tr><td>R.E.D. 10</td><td>Бразилия / Эфиопия</td><td>Средняя</td><td>Цитрус, орехи, шоколад</td><td>3 300 ₽</td><td>2 500 ₽</td></tr><tr><td>R.E.D. 20</td><td>Гондурас / Эфиопия</td><td>Средняя</td><td>Сухофрукты, выпечка, орехи</td><td>2 430 ₽</td><td>1 840 ₽</td></tr><tr><td>R.E.D. 21</td><td>Бразилия / Эфиопия</td><td>Средняя</td><td>Цветы, яблоко, шоколад</td><td>3 700 ₽</td><td>2 800 ₽</td></tr><tr><td>R.E.D. 27</td><td>Эфиопия</td><td>Средняя</td><td>Сухофрукты, шоколад</td><td>2 800 ₽</td><td>2 050 ₽</td></tr><tr><td>R.E.D. 27 (100% Arabica)</td><td>Эфиопия</td><td>Средняя</td><td>Брусника, кешью, молочный шоколад</td><td>2 565 ₽</td><td>1 940 ₽</td></tr><tr><td>R.E.D. 32</td><td>Бразилия / Вьетнам</td><td>Средняя</td><td>Кедровый орех, ягоды, карамель</td><td>2 300 ₽</td><td>1 730 ₽</td></tr><tr><td>R.E.D. 33</td><td>Гондурас</td><td>Тёмная</td><td>Молочный шоколад, орехи, ягоды</td><td>2 910 ₽</td><td>2 170 ₽</td></tr><tr><td>R.E.D. 36</td><td>Перу</td><td>Средняя</td><td>Тёмный виноград, цитрусы, орехи</td><td>3 050 ₽</td><td>2 270 ₽</td></tr><tr><td>R.E.D. 66</td><td>Бразилия / Вьетнам</td><td>Тёмная</td><td>Грецкий орех, тёмный шоколад</td><td>2 910 ₽</td><td>2 170 ₽</td></tr><tr><td>R.E.D. 73</td><td>Бразилия / Вьетнам</td><td>Средняя</td><td>Сухофрукты, орехи</td><td>3 650 ₽</td><td>2 750 ₽</td></tr><tr><td>R.E.D. 82</td><td>Бразилия / Колумбия</td><td>Тёмная</td><td>Чернослив, шоколад</td><td>3 780 ₽</td><td>2 840 ₽</td></tr><tr><td>Italian Blend</td><td>Бразилия / Вьетнам</td><td>Тёмная</td><td>Грейпфрут, тёмный шоколад, орехи</td><td>3 050 ₽</td><td>2 270 ₽</td></tr><tr><td>R.E.D. Kenya 100% Arabica</td><td>Кения</td><td>Светлая</td><td>Цитрусы, карамель, вишня</td><td>3 350 ₽</td><td>2 560 ₽</td></tr><tr><td>Kenya Trabocca Washed</td><td>Кения</td><td>Средняя</td><td>Сухофрукты, орехи</td><td>2 250 ₽</td><td>1 780 ₽</td></tr><tr><td>R.E.D. Мексика Фильтр</td><td>Мексика</td><td>Светлая</td><td>Цитрусовая цедра, жасмин, зелёный виноград</td><td>—</td><td>3 500 ₽</td></tr><tr><td>R.E.D. Мексика Эспрессо</td><td>Мексика</td><td>Средняя</td><td>Цитрусы, орехи</td><td>—</td><td>3 200 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Дрип кофе</h3>
+<p>Порционные дрип-пакеты 11 г для быстрого заваривания.</p>
+</div>
+<div class="count">3<span>поз.</span></div>
+</div>
+<div class="table-wrap">
+<table class="price-table compact">
+<thead>
+<tr>
+<th class="n a m e - c o l name-col">Наименование</th>
+<th>Вид</th>
+<th>Масса</th>
+<th>Состав</th>
+<th>Степень обжарки</th>
+<th>Дескрипторы</th>
+
+<th>Цена с арендой, руб</th><th>Цена без аренды, руб</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Дрип пакеты кофе Бразилия Cerrado</td>
+<td>Молотый</td>
+<td>11 г</td>
+<td>Бразилия</td>
+<td>Средняя</td>
+<td>Шоколад / Орехи</td>
+
+<td>—</td><td>80 ₽</td></tr>
+<tr>
+<td>Дрип пакеты кофе Кения</td>
+<td>Молотый</td>
+<td>11 г</td>
+<td>Кения</td>
+<td>Средняя</td>
+<td>Ягоды / Сухофрукты</td>
+
+<td>—</td><td>80 ₽</td></tr>
+<tr>
+<td>Дрип пакеты кофе Индонезия</td>
+<td>Молотый</td>
+<td>11 г</td>
+<td>Индонезия / Бразилия</td>
+<td>Средняя</td>
+<td>Тропики / Шоколад / Фрукты</td>
+
+<td>—</td><td>80 ₽</td></tr>
+</tbody>
+</table>
+</div>
+</article>
+</section>
+<section class="section" id="tea">
+<div class="section-head">
+<div class="section-icon">🍃</div>
+<div>
+<h2>Чай</h2>
+</div>
+</div>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Noble / Premium Tea Collection</h3>
+<p>Листовой, ароматизированный, травяной чай</p>
+</div>
+<div class="count">30<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>ОПИСАНИЕ</th><th>УПАКОВКА</th><th>ВЕС (Г)</th><th>Цена, руб</th><th>Цена за кг, руб</th></tr></thead><tbody><tr><td>Ассам (Assam)</td><td>Рубиновый густой настой, во вкусе медовые и цветочные нотки. Крепкий черный индийский чай с ярким ароматом солода.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Боливуд Чайпур (Bollywood Chaipur)</td><td>В состав входят черный чай, кусочки имбиря и корицы, душистый перец и зерна фенхеля, анис и почки гвоздики. Настой густой, непрозрачный с неповторимым ароматом с перечно-горчичной нотой.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Габа (Gaba oolong)</td><td>Настой ярко-янтарного, солнечного оттенка с сильным, приятным ароматом. Вкус премиального Габа Алишань наполнен ореховыми оттенками, мягкой горечью и терпким, кисловатым послевкусием.</td><td>пакет</td><td>400</td><td>3 920 ₽</td><td>9 800 ₽</td></tr><tr><td>Гречишный чай (Buckwheat tea)</td><td>Гречишный чай богат магнием, железом, калием, фосфором, медью, витаминами группы В, РР, Р (рутин) — кладовая полезных микроэлементов.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Да Хун Пао (Da Hong Pao)</td><td>Утёсный китайский чай, производят на северо- западе провинции Фуцзянь. По цвету высушенного листа чай бурый с бордовым и зелёным оттенками, имеет насыщенный, сладкий вкус. При последующих заварках вкус, цвет и аромат изменяются.</td><td>пакет</td><td>400</td><td>2 720 ₽</td><td>6 800 ₽</td></tr><tr><td>Дикая Вишня (Wild Cherry)</td><td>Цейлонский чёрный чай, плоды сушёной спелой вишни и ароматические</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Жасминовые Жемчужины (Jasmine Pearl)</td><td>Скрученные в форму шара листья при заваривании раскрываются и придают чаю неповторимый аромат жасмина.</td><td>пакет</td><td>400</td><td>3 920 ₽</td><td>9 800 ₽</td></tr><tr><td>Иван Чай (Willow Herb)</td><td>Настой плотный, каштанового цвета. Аромат выраженный, ягодный, с ореховым оттенком. Вкус с приятной терпкостью, кислой нотой и нежным завершением.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Каркадэ (Hibiscus)</td><td>Сладковато-кислый на вкус чайный напиток ярко- красного или бордового цвета из сушёных цветков суданской розы.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Лапсанг Сушонг (Lapsang Souchong)</td><td>Известный чай с оригинальным ароматом дыма и древесины, а также привкусом чернослива.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Лунг Чинг (Lung Ching)</td><td>Знаменитый китайский зеленый чай, имеет плоские листья красивой формы и дает светлый ароматный настой цвета зелёного нефрита. Незабываемый обволакивающий вкус с приятным послевкусием.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Манго и Дрим (Mango and Lemon)</td><td>Цейлонский чай с кусочками экзотических фруктов — гармоничная смесь ароматов. Настой крепкий, ярко-каштанового цвета, с выраженной лимонной кислинкой и терпкой горечью в послевкусии.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Матча (Matcha)</td><td>Порошковый чай. Аромат напоминает водоросли нори. Вкус очень плотный, морской, с приятной горчинкой и долгим,</td><td>пакет</td><td>200</td><td>1 960 ₽</td><td>9 800 ₽</td></tr><tr><td>Молочный улун (Milky oolong)</td><td>Китайский полуферментированный чай, скрученный по особой технологии. Букет сочетает карамельно-молочную сладость и оттенок зеленой свежести.</td><td>пакет</td><td>400</td><td>2 720 ₽</td><td>6 800 ₽</td></tr><tr><td>Пу эр (Puer)</td><td>Уникальный черный чай из китайской провинции Юннань. Листовой чай с интенсивным, землистым густым вкусом. Тёмный настой и длительное послевкусие.</td><td>пакет</td><td>400</td><td>2 720 ₽</td><td>6 800 ₽</td></tr><tr><td>Ромашка (Chamomile)</td><td>Ароматные соцветия ромашки высшего качества. Содержит витамины,</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Сенча (Sencha)</td><td>Классический зелёный китайский чай. Слегка терпкий, орехово-травяной привкус, изысканная горчинка, легкое сладкое послевкусие, которое долго не проходит.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Тайваньский улун Жэнь Шэнь (Taiwan Ginseng Oolong)</td><td>Полуферментированный улунский чай из Тайваня, обработанный женьшеневой пыльцой. Настой янтарного цвета, с богатым сладковатым, цветочным послевкусием.</td><td>пакет</td><td>400</td><td>2 720 ₽</td><td>6 800 ₽</td></tr><tr><td>Те Гуань Инь (Tie Guan Yin oolong)</td><td>Китайский полуферментированный чай из провинции Фуцзянь. Настой красивый, золотистый. Аромат в чашке</td><td>пакет</td><td>400</td><td>2 720 ₽</td><td>6 800 ₽</td></tr><tr><td>Фильтр пакеты для чая, Noble 100шт.</td><td>Пустые фильтр-пакеты для заваривания чая</td><td>100 шт</td><td>—</td><td>350 ₽</td><td></td></tr><tr><td>Фруктовая мечта (Fruit dream)</td><td>Мультивитаминный фруктовый чай: каркаде, цельные ягоды ежевики, сочная ароматная клубника, изюм и натуральные ароматические масла.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Цветки Жасмина (Jasmine Flower)</td><td>Настой прозрачный, цвета слоновой кости. Букет настоя лёгкий, чувствуется жасминовый цветок и горьковатая нотка хорошего зелёного чая.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Цветы Липы (Linden flowers)</td><td>Нежный согревающий напиток из листочков и соцветий липы с медовым вкусом и летним ароматом.</td><td>пакет</td><td>400</td><td>2 720 ₽</td><td>6 800 ₽</td></tr><tr><td>Чай зеленый THE NOBLETEA "Китайская Сенча"</td><td>Классический зелёный чай Сенча</td><td>25 шт</td><td>6 г</td><td>200 ₽</td><td></td></tr><tr><td>Чай зеленый THE NOBLETEA "Цветки Жасмина"</td><td>Нежный зелёный чай с ароматом жасмина</td><td>25 шт</td><td>6 г</td><td>200 ₽</td><td></td></tr><tr><td>Чай с фруктами THE NOBLETEA "Увертюра"</td><td>Фруктовый чай с ярким ароматом</td><td>25 шт</td><td>6 г</td><td>200 ₽</td><td></td></tr><tr><td>Чай черный THE NOBLETEA "Английский завтрак"</td><td>Классический крепкий чёрный чай для бодрого утра</td><td>25 шт (пакетики)</td><td>6 г</td><td>200 ₽</td><td></td></tr><tr><td>Чай черный THE NOBLETEA "Эрл Грей"</td><td>Чёрный чай с маслом бергамота</td><td>25 шт</td><td>6 г</td><td>200 ₽</td><td></td></tr><tr><td>Черный с Чабрецом (Black with thyme)</td><td>Купаж лучших сортов черного чая, дополненный глубоким, древесным ароматом и пряно- маслянистой нотой горного чабреца.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr><tr><td>Эрл Грей с васильком (Special Earl Gray)</td><td>Купаж на основе крепких цейлонских и индийских чаев с добавлением василька и масла бергамота.</td><td>пакет</td><td>400</td><td>1 800 ₽</td><td>4 500 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Ronnefeldt — Tea Caddy / Teavelope / Leaf Cup</h3>
+<p>Крупнолистовой, порционный и элитный чай</p>
+</div>
+<div class="count">41<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>ОПИСАНИЕ</th><th>ТИП</th><th>ВЕС (Г)</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Английский Завтрак</td><td>Мягкий цейлонский чай с неповторимо пикантным и выразительным вкусом, которым знамениты чаи этого острова.</td><td>черный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Английский Завтрак</td><td>Насыщенный темный, характерный цейлонский чай с восточной части острова с терпким, пикантным вкусом.</td><td>черный</td><td>25</td><td>600 ₽</td></tr><tr><td>Английский Завтрак</td><td>Мягкий цейлонский чай с неповторимо пикантным и выразительным вкусом, которым знамениты чаи этого острова.</td><td>черный</td><td>15</td><td>750 ₽</td></tr><tr><td>Ассам (Ирландский Завтрак)</td><td>Типичный ассам летнего сбора: крепкий, солодовый, пряный и очень ароматный вкус.</td><td>черный</td><td>25</td><td>600 ₽</td></tr><tr><td>Ассам Бари</td><td>Экстравагантный ломаный чай с большим количеством золотистых типсов и насыщенным вкусом. Крепкий, пряный, солодовый вкус.</td><td>черный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Ассам Бари</td><td>Типичный ассам летнего сбора: крепкий, солодовый, пряный и очень ароматный вкус.</td><td>черный</td><td>15</td><td>750 ₽</td></tr><tr><td>Белый с персиком</td><td>Удачная композиция с типичной сладостью груши и нотками спелого</td><td>белый ароматизированный</td><td>15</td><td>750 ₽</td></tr><tr><td>Веллнес</td><td>Тонизирующий травяной чай с ройбошем, мятой, анисом и другими свежими ингредиентами.</td><td>травяной</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Вербена</td><td>Необычный травяной чай с высоким содержанием эфирных масел и нежным цитрусовым вкусом.</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Весенний Дарджилинг</td><td>Первый урожай с южных склонов Гималаев. Знаменитый чай с мягким, нежно-цветочным ароматом.</td><td>черный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Горные Травы</td><td>Сбалансированная смесь трав с ройбошем и тонкими освежающими</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Гринлиф</td><td>Бережно обработанный Single estate c индийского высокогорья обладает нежно-терпким ароматом дарджилинга.</td><td>зеленый</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Дарджилинг</td><td>Отличное качество летнего сбора с высоких склонов Гималаев с насыщенным цветочным ароматом.</td><td>черный</td><td>25</td><td>600 ₽</td></tr><tr><td>Декафинато</td><td>Чай с пониженным содержанием кофеина, обладающий вкусом и ароматом традиционного черного чая.</td><td>черный</td><td>25</td><td>600 ₽</td></tr><tr><td>Жасмин</td><td>Нежные цветки жасмина дарят свой мягкий аромат китайскому зеленому чаю летнего сбора.</td><td>зеленый ароматизированный</td><td>25</td><td>600 ₽</td></tr><tr><td>Жасмин Голд</td><td>Нежные цветки жасмина дарят свой мягкий аромат этому китайскому зеленому чаю весеннего урожая.</td><td>зеленый ароматизированный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Жасмин Голд</td><td>Нежные цветки жасмина дарят свой мягкий аромат китайскому зеленому чаю летнего сбора.</td><td>зеленый ароматизированный</td><td>15</td><td>750 ₽</td></tr><tr><td>Зеленый Ангел</td><td>Типичная терпкость мягкого зеленого чая в композиции с сочно-сладким ароматом груши и персика.</td><td>зеленый ароматизированный</td><td>25</td><td>600 ₽</td></tr><tr><td>Зеленый дракон</td><td>Несравненный элитный чай с типичным сочетанием легкой терпкости и приятной свежести.</td><td>зеленый</td><td>15</td><td>750 ₽</td></tr><tr><td>Зимние Грезы</td><td>Насыщенный вкус ройбоша с интенсивным ароматом зимних специй, мягкой карамелью и апельсинами.</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Классический Зеленый</td><td>Классический зеленый чай со свежими, травяными, слегка терпкими нотками в сочетании с легкой сладостью.</td><td>зеленый</td><td>25</td><td>600 ₽</td></tr><tr><td>Крем Оранж</td><td>Насыщенный ройбош из Южной Африки с нежно-мягким ароматом ванили и вкусом спелых апельсинов.</td><td>травяной</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Летний Дарджилинг Голд</td><td>Этот знаменитый летний урожай отличается элегантным цветочным вкусом и несравненно гармоничным ароматом.</td><td>черный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Марокканская мята</td><td>Знаменитые шарики ганпаудера в сочетании с освежающей мятой – марокканский деликатес.</td><td>зеленый ароматизированный</td><td>15</td><td>750 ₽</td></tr><tr><td>Масала</td><td>Богатый вкус знакомых выразительных экзотических специй в крепком ассаме.</td><td>черный ароматизированный</td><td>15</td><td>750 ₽</td></tr><tr><td>Молочный Улун</td><td>Натуральный сливочный вкус этого чая достигается благодаря его особой обработке: паром с добавлением молока, затем чайный лист бережно скручивается.</td><td>улун</td><td>15</td><td>1 300 ₽</td></tr><tr><td>Моргентау®</td><td>Завораживающая композиция из сенчи, цветочных лепестков и нежно- фруктового вкуса манго и цитрусовых. Состав: Зеленый чай, ароматизаторы.</td><td>зеленый ароматизированный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Моргентау®</td><td>Завораживающая композиция из сенчи, цветочных лепестков и нежно- фруктового вкуса манго и цитрусовых.</td><td>зеленый ароматизированный</td><td>15</td><td>750 ₽</td></tr><tr><td>Мята</td><td>Отлично усваиваемый травяной чай, расслабляющий и свежий благодаря естественному содержанию ментола.</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Освежающая Мята</td><td>В сочетании с лимонником типичный пряный вкус мяты обретает</td><td>травяной</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Освежающая мята</td><td>В сочетании с лимонником типичный пряный вкус мяты обретает несравненную степень свежести.</td><td>травяной</td><td>15</td><td>750 ₽</td></tr><tr><td>Ройбош Ваниль</td><td>Сладкий, сливочный вкус ванили наилучшим образом подчеркивает насыщенность этого южноафриканского травяного чая.</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Ромашка</td><td>Успокаивающий травяной чай с характерным вкусом и ароматом ромашки.</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Сладкие Ягоды</td><td>Сочный аромат восхитительно сладких ягод дополняет вкус спелых садовых фруктов.</td><td>фруктовый</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Сладкие Ягоды</td><td>Аромат спелых ягод дарит этому чаю незабываемые ощущения солнечного летнего дня.</td><td>фруктовый</td><td>25</td><td>600 ₽</td></tr><tr><td>Сладкие ягоды</td><td>Сочный аромат восхитительно сладких ягод дополняет вкус спелых садовых фруктов.</td><td>фруктовый</td><td>15</td><td>750 ₽</td></tr><tr><td>Фруктовая Ромашка</td><td>Сочетание ромашки с легкой сладостью цветов апельсина придает этому травяному чаю приятный вкус и полезные свойства.</td><td>травяной</td><td>15</td><td>750 ₽</td></tr><tr><td>Цветок Серебристой Липы</td><td>Травяной чай из нежных цветков серебристой липы с мягкой медовой сладостью и приятным послевкусием.</td><td>травяной</td><td>25</td><td>600 ₽</td></tr><tr><td>Эрл Грей</td><td>Насыщенность осеннего дарджилинга в ароматном сочетании с искристо- свежим цитрусовым вкусом бергамота.</td><td>черный ароматизированный</td><td>20</td><td>1 300 ₽</td></tr><tr><td>Эрл Грей</td><td>Благородный черный чай, в сочетании со свежим цитрусовым ароматом бергамота: крепкий и интенсивный вкус.</td><td>черный ароматизированный</td><td>25</td><td>600 ₽</td></tr><tr><td>Эрл Грей</td><td>Благородный черный чай, в сочетании со свежим цитрусовым ароматом бергамота: крепкий и интенсивный вкус.</td><td>черный ароматизированный</td><td>15</td><td>750 ₽</td></tr></tbody></table></div>
+</article>
+</section>
+<section class="section" id="milk">
+<div class="section-head">
+<div class="section-icon">🥛</div>
+<div>
+<h2>Молоко / альтернатива</h2>
+</div>
+</div>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>ЭкоНива / Лебедянь — молоко и сливки</h3>
+<p>Ультрапастеризованное молоко и сливки для кофеен, ресторанов и офисов</p>
+</div>
+<div class="count">6<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">Наименование</th><th>Описание</th><th>Объем / жирность</th><th>Кол-во в уп.</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Молоко Лебедянь ультрапастеризованное 3,2%</td><td>Лебедянь</td><td>1000 мл / 3,2%</td><td>12 шт</td><td>115 ₽</td></tr><tr><td>Молоко ультрапаст. Красная Корова 3,2%</td><td>Красная Корова</td><td>1000 мл / 3,2%</td><td>12 шт</td><td>105 ₽</td></tr><tr><td>Сливки Свежее Завтра PROFESSIONAL 10%</td><td>Сливки Professional</td><td>1 л / 10%</td><td>12 шт</td><td>265 ₽</td></tr><tr><td>Молоко ультрапаст. Pr.Line ЭкоНива 3,2%</td><td>ЭкоНива Pr.Line</td><td>1000 мл / 3,2%</td><td>12 шт</td><td>125 ₽</td></tr><tr><td>Сливки Свежее завтра Professional ГОСТ 22%</td><td>Сливки Professional</td><td>1 л / 22%</td><td>12 шт</td><td>480 ₽</td></tr><tr><td>БМК молоко питьевое безлактозное ультрапастеризованное 1,8%</td><td>Безлактозное молоко, TBA edge</td><td>975 мл / 1,8%</td><td>12 шт</td><td>175 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>BARISTA — альтернативное молоко</h3>
+<p>Растительные напитки профессиональной серии для кофе</p>
+</div>
+<div class="count">8<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>Кол-во в уп.</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Кокосовое "BARISTA"</td><td>12</td><td>180 ₽</td></tr><tr><td>Миндальное "BARISTA"</td><td>12</td><td>180 ₽</td></tr><tr><td>Банановое "BARISTA"</td><td>12</td><td>160 ₽</td></tr><tr><td>Овсяное "BARISTA"</td><td>12</td><td>105 ₽</td></tr><tr><td>Кокосовое "BARISTA"</td><td>12</td><td>190 ₽</td></tr><tr><td>Миндальное "BARISTA"</td><td>12</td><td>190 ₽</td></tr><tr><td>Банановое "BARISTA"</td><td>12</td><td>165 ₽</td></tr><tr><td>Овсяное "BARISTA"</td><td>12</td><td>165 ₽</td></tr></tbody></table></div>
+</article>
+</section>
+<section class="section" id="syrups">
+<div class="section-head">
+<div class="section-icon">🍹</div>
+<div>
+<h2>Сиропы / кордиалы</h2>
+</div>
+</div>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Barbados — сиропы и концентраты</h3>
+<p>Бутылка 1000 мл</p>
+</div>
+<div class="count">90<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table compact"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ СИРОПА</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Абрикос</td><td>525 ₽</td></tr><tr><td>Амаретто</td><td>525 ₽</td></tr><tr><td>Ананас</td><td>510 ₽</td></tr><tr><td>Апельсин</td><td>525 ₽</td></tr><tr><td>Арахис в шоколаде</td><td>525 ₽</td></tr><tr><td>Арбуз</td><td>510 ₽</td></tr><tr><td>Бабл гам</td><td>525 ₽</td></tr><tr><td>Базилик</td><td>510 ₽</td></tr><tr><td>Байкал</td><td>525 ₽</td></tr><tr><td>Банан желтый</td><td>525 ₽</td></tr><tr><td>Барбарис</td><td>525 ₽</td></tr><tr><td>Блю Курасао</td><td>490 ₽</td></tr><tr><td>Ваниль</td><td>490 ₽</td></tr><tr><td>Виноград белый</td><td>490 ₽</td></tr><tr><td>Виноград красный</td><td>490 ₽</td></tr><tr><td>Вишня</td><td>525 ₽</td></tr><tr><td>Гранат</td><td>525 ₽</td></tr><tr><td>Гренадин</td><td>490 ₽</td></tr><tr><td>Груша</td><td>525 ₽</td></tr><tr><td>Гуава</td><td>525 ₽</td></tr><tr><td>Дыня</td><td>525 ₽</td></tr><tr><td>Ежевика</td><td>525 ₽</td></tr><tr><td>Зеленая мята</td><td>480 ₽</td></tr><tr><td>Зеленое яблоко</td><td>525 ₽</td></tr><tr><td>Земляника</td><td>525 ₽</td></tr><tr><td>Имбирный пряник</td><td>525 ₽</td></tr><tr><td>Имбирь</td><td>525 ₽</td></tr><tr><td>Индика</td><td>525 ₽</td></tr><tr><td>Ирландский крем</td><td>525 ₽</td></tr><tr><td>Карамель</td><td>480 ₽</td></tr><tr><td>Карамель соленая</td><td>480 ₽</td></tr><tr><td>Киви</td><td>525 ₽</td></tr><tr><td>Клён</td><td>525 ₽</td></tr><tr><td>Клубника</td><td>525 ₽</td></tr><tr><td>Клюква</td><td>525 ₽</td></tr><tr><td>Кокос</td><td>480 ₽</td></tr><tr><td>Корица</td><td>440 ₽</td></tr><tr><td>Красное золото</td><td>525 ₽</td></tr><tr><td>Лаванда</td><td>525 ₽</td></tr><tr><td>Лайм</td><td>510 ₽</td></tr><tr><td>Лесной орех</td><td>480 ₽</td></tr><tr><td>Лимон</td><td>370 ₽</td></tr><tr><td>Личи</td><td>510 ₽</td></tr><tr><td>Малина</td><td>525 ₽</td></tr><tr><td>Манго</td><td>525 ₽</td></tr><tr><td>Мандарин</td><td>525 ₽</td></tr><tr><td>Маракуйя</td><td>525 ₽</td></tr><tr><td>Мед</td><td>525 ₽</td></tr><tr><td>Миндаль</td><td>480 ₽</td></tr><tr><td>Мохито</td><td>510 ₽</td></tr><tr><td>Мята</td><td>490 ₽</td></tr><tr><td>Облепиха</td><td>490 ₽</td></tr><tr><td>Огурец</td><td>525 ₽</td></tr><tr><td>Персик</td><td>525 ₽</td></tr><tr><td>Попкорн</td><td>490 ₽</td></tr><tr><td>Просекко</td><td>490 ₽</td></tr><tr><td>Роза</td><td>490 ₽</td></tr><tr><td>Розовый Грейпфрут</td><td>525 ₽</td></tr><tr><td>Розовый персик</td><td>525 ₽</td></tr><tr><td>Серебряный лед</td><td>490 ₽</td></tr><tr><td>Слива шот</td><td>525 ₽</td></tr><tr><td>Тархун</td><td>490 ₽</td></tr><tr><td>Тирамису</td><td>490 ₽</td></tr><tr><td>Тоффи Нат</td><td>490 ₽</td></tr><tr><td>Тутти Фрутти</td><td>490 ₽</td></tr><tr><td>Фисташки</td><td>480 ₽</td></tr><tr><td>Цветки Бузины</td><td>525 ₽</td></tr><tr><td>Цветки Вишни</td><td>490 ₽</td></tr><tr><td>Черная Смородина</td><td>490 ₽</td></tr><tr><td>Черника</td><td>490 ₽</td></tr><tr><td>Шоколад</td><td>500 ₽</td></tr><tr><td>Шоколадное печенье</td><td>525 ₽</td></tr><tr><td>Эвкалипт</td><td>490 ₽</td></tr><tr><td>Юзу</td><td>525 ₽</td></tr><tr><td>Яблочный пирог</td><td>420 ₽</td></tr><tr><td>ФМ Банан</td><td>825 ₽</td></tr><tr><td>ФМ Зеленое яблоко</td><td>825 ₽</td></tr><tr><td>ФМ Киви</td><td>825 ₽</td></tr><tr><td>ФМ Клубника</td><td>825 ₽</td></tr><tr><td>ФМ Клюква</td><td>825 ₽</td></tr><tr><td>ФМ Кокос</td><td>825 ₽</td></tr><tr><td>ФМ Красный апельсин</td><td>825 ₽</td></tr><tr><td>ФМ Лесные ягоды</td><td>825 ₽</td></tr><tr><td>ФМ Малина</td><td>825 ₽</td></tr><tr><td>ФМ Манго</td><td>825 ₽</td></tr><tr><td>ФМ Маракуйя</td><td>825 ₽</td></tr><tr><td>ФМ Черная смородина</td><td>825 ₽</td></tr><tr><td>ФМ Черника</td><td>825 ₽</td></tr><tr><td>Сок лимона концентрат</td><td>650 ₽</td></tr><tr><td>Сок лайма концентрат</td><td>650 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Herbarista — премиальные сиропы</h3>
+<p>Бутылка 700 мл</p>
+</div>
+<div class="count">51<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table compact"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ СИРОПА</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Double Burn Caramel (Карамель двойного обжига)</td><td>800 ₽</td></tr><tr><td>Double Burn Salted Caramel (Карамель двойного обжига с солью)</td><td>800 ₽</td></tr><tr><td>Bourbon Vanilla (натуральная ваниль с зернами)</td><td>800 ₽</td></tr><tr><td>Black Currant (Черная смородина с листьями)</td><td>750 ₽</td></tr><tr><td>King kong (Банановый сок с мякотью)</td><td>750 ₽</td></tr><tr><td>Butterscotch (Сливочный Ирис с цветочным экстрактом)</td><td>750 ₽</td></tr><tr><td>Cherry Lady (Вишня с виноградной косточкой)</td><td>750 ₽</td></tr><tr><td>Choco Bomb (Шоколадный трюфель)</td><td>750 ₽</td></tr><tr><td>Melontini (Дыня)</td><td>750 ₽</td></tr><tr><td>Watermelontini (Арбуз)</td><td>750 ₽</td></tr><tr><td>Double Strawberry (Клубника и Земляника)</td><td>750 ₽</td></tr><tr><td>The Nutcracker (Лесной орех с черным орехом и арахисовой пастой)</td><td>800 ₽</td></tr><tr><td>Eucalyptus &amp; Mint (Эвкалипт с мятой)</td><td>800 ₽</td></tr><tr><td>Armored Cow (Сгущенное молоко)</td><td>800 ₽</td></tr><tr><td>Barbarella (Авторский фруктовый коктейль с цитрусовыми маслами и ванилью)</td><td>750 ₽</td></tr><tr><td>Organic Cola (Органический вариант колы)</td><td>750 ₽</td></tr><tr><td>Original Maple (Кленовый с каштаном)</td><td>750 ₽</td></tr><tr><td>Coco.In (Кокосовый с мякотью)</td><td>800 ₽</td></tr><tr><td>Authentic Grenadine (Старинный рецепт)</td><td>750 ₽</td></tr><tr><td>Eros Pear Elixir (Пряная Груша)</td><td>750 ₽</td></tr><tr><td>Solar Energy (Цитрусовые соки с маслами)</td><td>750 ₽</td></tr><tr><td>Dragon Breath (Копченые перцы)</td><td>720 ₽</td></tr><tr><td>Elderberry &amp; flower (Цветы бузины с соком черной бузины)</td><td>720 ₽</td></tr><tr><td>Raspberry Show (Малина с листьями)</td><td>820 ₽</td></tr><tr><td>Passion Fruit Ferrari (Маракуйя)</td><td>750 ₽</td></tr><tr><td>Spice Bazzar (Восточные пряности)</td><td>750 ₽</td></tr><tr><td>Thai Mango (Манго)</td><td>750 ₽</td></tr><tr><td>Apple power (Яблоко с листьями)</td><td>750 ₽</td></tr><tr><td>Gingerbread (Имбирный пряник)</td><td>750 ₽</td></tr><tr><td>Blackberry magic (Ежевика с листьями)</td><td>750 ₽</td></tr><tr><td>Top Gum (Мощный сахарный сироп)</td><td>750 ₽</td></tr><tr><td>Irish cream (Ирландский крем)</td><td>820 ₽</td></tr><tr><td>Lavender (Лаванда)</td><td>750 ₽</td></tr><tr><td>Pineapple Q (Ананас)</td><td>750 ₽</td></tr><tr><td>Chinensis Plum (Личи)</td><td>750 ₽</td></tr><tr><td>Dr.Almond (с миндальной пастой и эссенцией)</td><td>750 ₽</td></tr><tr><td>Tarragon (Из свежих листьев эстрагона)</td><td>750 ₽</td></tr><tr><td>Pop Corn (Карамелизированная воздушная кукуруза)</td><td>750 ₽</td></tr><tr><td>Bubble Gum (Сказочный вкус жвачки)</td><td>750 ₽</td></tr><tr><td>Tundra berries elixir (Ягодный Эликсир Тундры)</td><td>800 ₽</td></tr><tr><td>Pistacho (Обжаренные ядра фисташки)</td><td>800 ₽</td></tr><tr><td>Lime Cordial (Лаймовый Кордиал с Каффир листом и цитрусовыми маслами)</td><td>820 ₽</td></tr><tr><td>Hemp Halva (Конопляная Халва с маслом CBD)</td><td>800 ₽</td></tr><tr><td>Red Orange (Красный апельсин с эфирными маслами)</td><td>750 ₽</td></tr><tr><td>Lemograss Extasy (Из свежих стеблей лемонграсса и масел бергамота)</td><td>750 ₽</td></tr><tr><td>Cashmere Peach (с мякотью белого персика)</td><td>750 ₽</td></tr><tr><td>Hit Plum (с мякотью из особого сорта сливы)</td><td>750 ₽</td></tr><tr><td>Имбирь (Ginger)</td><td>750 ₽</td></tr><tr><td>Aroma de Tabac (Табак-Ваниль)</td><td>750 ₽</td></tr><tr><td>Pumpkin Head (Тыква)</td><td>750 ₽</td></tr><tr><td>Old pine tree (Кедр)</td><td>800 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Rawberry — натуральные концентраты</h3>
+<p>Бутылка 500 мл для лимонадов и чаев</p>
+</div>
+<div class="count">48<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table compact"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Барбарис</td><td>680 ₽</td></tr><tr><td>Бузина</td><td>680 ₽</td></tr><tr><td>Ваниль</td><td>680 ₽</td></tr><tr><td>Вишня</td><td>680 ₽</td></tr><tr><td>Грейпфрут</td><td>680 ₽</td></tr><tr><td>Груша</td><td>680 ₽</td></tr><tr><td>Имбирь</td><td>680 ₽</td></tr><tr><td>Какао</td><td>680 ₽</td></tr><tr><td>Карамель</td><td>680 ₽</td></tr><tr><td>Гибискус</td><td>680 ₽</td></tr><tr><td>Клубника</td><td>680 ₽</td></tr><tr><td>Клюква</td><td>680 ₽</td></tr><tr><td>Корица</td><td>680 ₽</td></tr><tr><td>Лаванда</td><td>680 ₽</td></tr><tr><td>Сбитень</td><td>680 ₽</td></tr><tr><td>Лайм</td><td>680 ₽</td></tr><tr><td>Лемонграсс</td><td>680 ₽</td></tr><tr><td>Лимон</td><td>680 ₽</td></tr><tr><td>Малина</td><td>680 ₽</td></tr><tr><td>Маракуйя</td><td>680 ₽</td></tr><tr><td>Мята</td><td>680 ₽</td></tr><tr><td>Облепиха</td><td>680 ₽</td></tr><tr><td>Ревень (сезон)</td><td>680 ₽</td></tr><tr><td>Тархун</td><td>680 ₽</td></tr><tr><td>Чабрец</td><td>680 ₽</td></tr><tr><td>Черная смородина</td><td>680 ₽</td></tr><tr><td>Щавель (сезон)</td><td>680 ₽</td></tr><tr><td>Яблоко</td><td>680 ₽</td></tr><tr><td>Глинтвейн</td><td>680 ₽</td></tr><tr><td>Щавель-Бузина (сезон)</td><td>680 ₽</td></tr><tr><td>Вишня-Специи</td><td>680 ₽</td></tr><tr><td>Клубника-Базилик-Лаванда</td><td>680 ₽</td></tr><tr><td>Клубника-Базилик</td><td>680 ₽</td></tr><tr><td>Барбарис-Базилик</td><td>680 ₽</td></tr><tr><td>Ягодный</td><td>680 ₽</td></tr><tr><td>Малина-Лемонграсс-Имбирь-Корица</td><td>680 ₽</td></tr><tr><td>Щавель-Дюшес (сезон)</td><td>680 ₽</td></tr><tr><td>Малина-Ревень-Имбирь (сезон)</td><td>680 ₽</td></tr><tr><td>Лемонграсс-Имбирь-Мята</td><td>680 ₽</td></tr><tr><td>Клюква-Специи</td><td>680 ₽</td></tr><tr><td>Малина-Базилик</td><td>680 ₽</td></tr><tr><td>Грейпфрут-Кинза</td><td>680 ₽</td></tr><tr><td>Яблоко-Травы</td><td>680 ₽</td></tr><tr><td>Яблоко-Базилик</td><td>680 ₽</td></tr><tr><td>Лимон-Имбирь</td><td>680 ₽</td></tr><tr><td>Клубника-Лайм</td><td>680 ₽</td></tr><tr><td>Мохито</td><td>680 ₽</td></tr><tr><td>Маракуйя-Лемонграс</td><td>680 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Sivers — премиальные кордиалы</h3>
+<p>Бутылка 1 л, натуральные ингредиенты</p>
+</div>
+<div class="count">36<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table compact"><thead><tr><th>№</th><th class="name-col">НАИМЕНОВАНИЕ</th><th>Цена, руб</th></tr></thead><tbody><tr><td>1</td><td>Чай - ежевика - гранат - специи</td><td>750 ₽</td></tr><tr><td>2</td><td>Базилик - фенхель</td><td>750 ₽</td></tr><tr><td>3</td><td>Клубника - малина - можжевельник</td><td>750 ₽</td></tr><tr><td>4</td><td>Корица - кардамон - можжевельник</td><td>750 ₽</td></tr><tr><td>5</td><td>Кардамон - личи</td><td>750 ₽</td></tr><tr><td>6</td><td>Пряный - черная смородина</td><td>750 ₽</td></tr><tr><td>7</td><td>Манго - маракуйя</td><td>750 ₽</td></tr><tr><td>8</td><td>Земляника - клюква - малина</td><td>750 ₽</td></tr><tr><td>9</td><td>Юдзу - персик</td><td>750 ₽</td></tr><tr><td>10</td><td>Лесные ягоды - фейхоа</td><td>750 ₽</td></tr><tr><td>11</td><td>Лаванда - черника - бергамот</td><td>750 ₽</td></tr><tr><td>12</td><td>Клубника - вишня</td><td>750 ₽</td></tr><tr><td>13</td><td>Гранат - ежевика</td><td>750 ₽</td></tr><tr><td>14</td><td>Ананас - персик</td><td>750 ₽</td></tr><tr><td>15</td><td>Яблоко - карамель - донник</td><td>750 ₽</td></tr><tr><td>16</td><td>Фейхоа - банан - манго</td><td>750 ₽</td></tr><tr><td>17</td><td>Слива - рислинг</td><td>750 ₽</td></tr><tr><td>18</td><td>Персик - липа</td><td>750 ₽</td></tr><tr><td>19</td><td>Манго - кокос</td><td>750 ₽</td></tr><tr><td>20</td><td>Клюква - облепиха</td><td>750 ₽</td></tr><tr><td>21</td><td>Арбуз - дыня</td><td>750 ₽</td></tr><tr><td>22</td><td>Вишня - апельсин - корица</td><td>750 ₽</td></tr><tr><td>23</td><td>Облепиха - мята - черная смородина</td><td>750 ₽</td></tr><tr><td>24</td><td>Зеленое яблоко - матча</td><td>750 ₽</td></tr><tr><td>25</td><td>Мандарин - ананас - хвоя</td><td>750 ₽</td></tr><tr><td>26</td><td>Мандарин</td><td>750 ₽</td></tr><tr><td>27</td><td>Алоэ</td><td>750 ₽</td></tr><tr><td>28</td><td>Вишня</td><td>750 ₽</td></tr><tr><td>29</td><td>Клубника</td><td>750 ₽</td></tr><tr><td>30</td><td>Малина</td><td>750 ₽</td></tr><tr><td>31</td><td>Маракуйя</td><td>750 ₽</td></tr><tr><td>32</td><td>Манго</td><td>750 ₽</td></tr><tr><td>33</td><td>Облепиха</td><td>750 ₽</td></tr><tr><td>34</td><td>Банан</td><td>750 ₽</td></tr><tr><td>35</td><td>Апельсиновый</td><td>750 ₽</td></tr><tr><td>36</td><td>Лаймовый</td><td>750 ₽</td></tr></tbody></table></div>
+</article>
+</section>
+<section class="section" id="water">
+<div class="section-head">
+<div class="section-icon">💧</div>
+<div>
+<h2>Вода / напитки</h2>
+</div>
+</div>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Вода Байкал</h3>
+<p>Природная, минеральная, детская вода</p>
+</div>
+<div class="count">20<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th>№</th><th class="name-col">НАИМЕНОВАНИЕ</th><th>ОБЪЕМ, Л</th><th>ГАЗАЦИЯ</th><th>УПАКОВКА</th><th>Кол-во в уп.</th><th>Цена, руб</th></tr></thead><tbody><tr><td>1</td><td>БАЙКАЛ430 / BAIKAL430, Глубинная вода из озера Байкал</td><td>0,45</td><td>негаз.</td><td>ПЭТ</td><td>12</td><td>78 ₽</td></tr><tr><td>3</td><td>БАЙКАЛ430 / BAIKAL430, Глубинная вода из озера Байкал</td><td>0,85</td><td>негаз.</td><td>ПЭТ</td><td>6</td><td>117 ₽</td></tr><tr><td>4</td><td>БАЙКАЛ430 / BAIKAL430, Глубинная вода из озера Байкал</td><td>5,00</td><td>негаз.</td><td>ПЭТ</td><td>2</td><td>502 ₽</td></tr><tr><td>5</td><td>БАЙКАЛ430 / BAIKAL430, Глубинная вода из озера Байкал (Подходит для кулера)</td><td>9,00</td><td>негаз.</td><td>ПЭТ</td><td>1</td><td>859 ₽</td></tr><tr><td>6</td><td>Питьевая вода «Байкальская», негазированная/ газированная, 1,5 л</td><td>1,50</td><td>газ/негаз</td><td>ПЭТ</td><td>6</td><td>105 ₽</td></tr><tr><td>7</td><td>Жемчужина Байкала / BAIKAL PEARL, Природная артезианская вода</td><td>0,25</td><td>негаз.</td><td>стекло</td><td>24</td><td>100 ₽</td></tr><tr><td>8</td><td>Жемчужина Байкала / BAIKAL PEARL, Природная артезианская вода</td><td>0,53</td><td>негаз.</td><td>стекло</td><td>20</td><td>143 ₽</td></tr><tr><td>9</td><td>Жемчужина Байкала / BAIKAL PEARL, Природная артезианская вода</td><td>0,75</td><td>негаз.</td><td>стекло</td><td>15</td><td>200 ₽</td></tr><tr><td>10</td><td>Жемчужина Байкала / BAIKAL PEARL, Природная артезианская вода</td><td>0,33</td><td>негаз.</td><td>ПЭТ</td><td>12</td><td>70 ₽</td></tr><tr><td>11</td><td>Жемчужина Байкала SPORT / BAIKAL PEARL, Природная артезианская вода</td><td>0,50</td><td>негаз.</td><td>ПЭТ</td><td>12</td><td>81 ₽</td></tr><tr><td>12</td><td>Жемчужина Байкала / BAIKAL PEARL, Природная артезианская вода</td><td>1,00</td><td>негаз.</td><td>ПЭТ</td><td>6</td><td>128 ₽</td></tr><tr><td>13</td><td>Байкал Резерв / BAIKAL RESERVE, Минеральная лечебно-столовая вода</td><td>0,25</td><td>газ.</td><td>стекло</td><td>24</td><td>100 ₽</td></tr><tr><td>14</td><td>Байкал Резерв / BAIKAL RESERVE, Минеральная лечебно-столовая вода</td><td>0,53</td><td>газ.</td><td>стекло</td><td>20</td><td>143 ₽</td></tr><tr><td>15</td><td>Байкал Резерв / BAIKAL RESERVE, Минеральная лечебно-столовая вода</td><td>0,75</td><td>газ.</td><td>стекло</td><td>15</td><td>200 ₽</td></tr><tr><td>16</td><td>Байкал Резерв / BAIKAL RESERVE, Минеральная лечебно-столовая вода</td><td>0,33</td><td>газ.</td><td>ПЭТ</td><td>12</td><td>70 ₽</td></tr><tr><td>17</td><td>Байкал Резерв / BAIKAL RESERVE, Минеральная лечебно-столовая вода</td><td>1,00</td><td>газ.</td><td>ПЭТ</td><td>6</td><td>128 ₽</td></tr><tr><td>18</td><td>Природная вода для детей "Мика-Мика"</td><td>0,33</td><td>негаз.</td><td>ПЭТ</td><td>12</td><td>78 ₽</td></tr><tr><td>19</td><td>Природная вода для детей "Мика-Мика"</td><td>0,50</td><td>негаз.</td><td>ПЭТ</td><td>12</td><td>94 ₽</td></tr><tr><td>20</td><td>Природная вода для детей "Мика-Мика"</td><td>1,50</td><td>негаз.</td><td>ПЭТ</td><td>6</td><td>151 ₽</td></tr><tr><td>21</td><td>Природная вода для детей "Мика-Мика"</td><td>5,00</td><td>негаз.</td><td>ПЭТ</td><td>2</td><td>423 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>Jumbo — премиальная газировка</h3>
+<p>Классические и оригинальные вкусы</p>
+</div>
+<div class="count">14<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>ОБЪЕМ, Л</th><th>УПАКОВКА</th><th>Кол-во в уп.</th><th>Цена, руб</th></tr></thead><tbody><tr><td>Jumbo Cola</td><td>0,33</td><td>Жест. банка</td><td>12</td><td>71 ₽</td></tr><tr><td>Jumbo Cola</td><td>0,33</td><td>Стекло</td><td>12</td><td>93 ₽</td></tr><tr><td>Jumbo Cola</td><td>0,50</td><td>ПЭТ</td><td>12</td><td>77 ₽</td></tr><tr><td>Jumbo Cola</td><td>1,00</td><td>ПЭТ</td><td>6</td><td>130 ₽</td></tr><tr><td>Jumbo Cola</td><td>1,50</td><td>ПЭТ</td><td>6</td><td>177 ₽</td></tr><tr><td>Jumbo Cola</td><td>2,50</td><td>ПЭТ</td><td>6</td><td>258 ₽</td></tr><tr><td>Jumbo Apelcino</td><td>0,33</td><td>Стекло</td><td>12</td><td>97 ₽</td></tr><tr><td>Jumbo Apelcino</td><td>0,50</td><td>ПЭТ</td><td>12</td><td>81 ₽</td></tr><tr><td>Jumbo Apelcino</td><td>1,50</td><td>ПЭТ</td><td>6</td><td>185 ₽</td></tr><tr><td>Jumbo Lime</td><td>0,33</td><td>Стекло</td><td>12</td><td>97 ₽</td></tr><tr><td>Jumbo Lime</td><td>0,50</td><td>ПЭТ</td><td>12</td><td>81 ₽</td></tr><tr><td>Jumbo Lime</td><td>1,50</td><td>ПЭТ</td><td>6</td><td>185 ₽</td></tr><tr><td>Jumbo Tonic</td><td>0,33</td><td>Стекло</td><td>12</td><td>97 ₽</td></tr><tr><td>Jumbo Tonic</td><td>1,00</td><td>ПЭТ</td><td>6</td><td>130 ₽</td></tr></tbody></table></div>
+</article>
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>IL PRIMO — соки и нектары</h3>
+<p>Дополнительные напитки 1 л и 0,2 л</p>
+</div>
+<div class="count">19<span>поз.</span></div>
+</div>
+<div class="table-wrap"><table class="price-table"><thead><tr><th class="name-col">НАИМЕНОВАНИЕ</th><th>Цена, руб</th></tr></thead><tbody><tr><td>1л "IL PRIMO" нектар вишнёвый осветлённый</td><td>150 ₽</td></tr><tr><td>1л "IL PRIMO" нектар манговый с мякотью</td><td>163 ₽</td></tr><tr><td>1л "IL PRIMO" сок ананасовый восстановленный</td><td>198 ₽</td></tr><tr><td>1л "IL PRIMO" сок апельсиновый восстановленный</td><td>206 ₽</td></tr><tr><td>1л "IL PRIMO" сок виноградный осветлённый восстановленный</td><td>209 ₽</td></tr><tr><td>1л "IL PRIMO" сок гранатовый восстановленный</td><td>281 ₽</td></tr><tr><td>1л "IL PRIMO" сок грейпфрутовый с мякотью восстановленный</td><td>226 ₽</td></tr><tr><td>1л "IL PRIMO" сок яблочный из зелёных яблок восстановленный</td><td>150 ₽</td></tr><tr><td>1л "IL PRIMO" сок томатный восстановленный с солью</td><td>150 ₽</td></tr><tr><td>0,2л "IL PRIMO" нектар вишневый осветленный</td><td>55 ₽</td></tr><tr><td>0,2л "IL PRIMO" нектар из гуавы с мякотью</td><td>68 ₽</td></tr><tr><td>0,2л "IL PRIMO" нектар манговый с мякотью</td><td>68 ₽</td></tr><tr><td>0,2л "IL PRIMO" нектар персиковый с мякотью</td><td>68 ₽</td></tr><tr><td>0,2л "IL PRIMO" сок ананасовый восстановленный</td><td>71 ₽</td></tr><tr><td>0,2л "IL PRIMO" сок апельсиновый восстановленный</td><td>78 ₽</td></tr><tr><td>0,2л "IL PRIMO" сок грейпфрутовый с мякотью восстановленный</td><td>81 ₽</td></tr><tr><td>0,2л "IL PRIMO" сок мультифруктовый с мякотью восстановленный</td><td>68 ₽</td></tr><tr><td>0,2л "IL PRIMO" сок томатный с солью с мякотью восстановленный</td><td>68 ₽</td></tr><tr><td>0,2л "IL PRIMO" сок яблочный из зеленых яблок осветленный восстановленный</td><td>68 ₽</td></tr></tbody></table></div>
+</article>
+</section>
+</div>
+</body>
+</html>

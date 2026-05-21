@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Прайс-лист — ООО «Компания Кофе и Чая»</title>
+<style>
+    :root {
+      --bg: #f1f1ee;
+      --paper: #ffffff;
+      --ink: #1f2328;
+      --muted: #6b7076;
+      --line: #ded8ce;
+      --line-strong: #c9bca8;
+      --gold: #c6a15b;
+      --gold-dark: #9d7730;
+      --coffee: #3a2b22;
+      --red: #c82127;
+      --teal: #167b84;
+      --cream: #fbf7ee;
+      --shadow: 0 18px 42px rgba(31,35,40,.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.35;
+    }
+    .doc { max-width: 1180px; margin: 24px auto; background: var(--paper); box-shadow: var(--shadow); }
+    .hero {
+      background: linear-gradient(135deg, #161719 0%, #2d241c 58%, #47351e 100%);
+      color: #fff;
+      padding: 34px 42px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; right: -80px; top: -90px; width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(198,161,91,.34), rgba(198,161,91,0) 70%);
+    }
+    .kicker { color: #d8bc7b; text-transform: uppercase; letter-spacing: .18em; font-size: 12px; font-weight: 800; }
+    h1 { margin: 8px 0 8px; font-size: 42px; line-height: 1.05; letter-spacing: -.035em; }
+    .lead { margin: 0; max-width: 760px; color: #e6e0d6; font-size: 16px; }
+    .nav { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); padding: 12px 42px; display: flex; gap: 10px; flex-wrap: wrap; backdrop-filter: blur(8px); }
+    .nav a { text-decoration: none; color: var(--ink); font-weight: 800; font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; background: var(--cream); }
+    .nav a:hover { border-color: var(--gold); color: var(--gold-dark); }
+    .summary { display: grid; grid-template-columns: repeat({{ sections|length }}, 1fr); gap: 12px; padding: 22px 42px 8px; }
+    {% if sections|length > 5 %}
+    @media (min-width: 801px) { .summary { grid-template-columns: repeat(5, 1fr); } }
+    {% endif %}
+    .summary-card { background: var(--cream); border: 1px solid var(--line); border-radius: 16px; padding: 14px; min-height: 86px; }
+    .summary-card strong { font-size: 24px; color: var(--gold-dark); display: block; }
+    .summary-card span { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .summary-card .icon { font-size: 22px; margin-bottom: 2px; }
+    .section { padding: 28px 42px 16px; page-break-before: always; }
+    .section:first-of-type { page-break-before: auto; }
+    .section-head { display: flex; align-items: center; gap: 14px; border-bottom: 2px solid var(--line); padding-bottom: 12px; margin-bottom: 18px; }
+    .section-icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--coffee); color: #fff; font-size: 24px; }
+    .section h2 { margin: 0; font-size: 30px; line-height: 1; }
+    .brand-card { border: 1px solid var(--line); border-radius: 18px; margin: 18px 0 26px; overflow: hidden; background: #fff; page-break-inside: avoid; }
+    .brand-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; background: linear-gradient(180deg, #fff, #fbf8f1); border-bottom: 1px solid var(--line); padding: 18px 20px; }
+    .brand-card h3 { margin: 0; font-size: 22px; line-height: 1.15; }
+    .brand-card-head p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+    .count { min-width: 58px; text-align: center; border-radius: 14px; background: var(--teal); color: #fff; font-size: 24px; font-weight: 900; padding: 8px 10px; line-height: 1; }
+    .count span { display: block; font-size: 10px; font-weight: 800; margin-top: 4px; text-transform: uppercase; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.4px; }
+    th { background: #2b2f33; color: #fff; text-align: center; padding: 9px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; vertical-align: top; }
+    td { border-top: 1px solid var(--line); padding: 8px 10px; vertical-align: top; }
+    tbody tr:nth-child(even) td { background: #fbfaf7; }
+    tbody tr:hover td { background: #fff6df; }
+    td:last-child { font-weight: 800; color: #245d38; white-space: nowrap; }
+    .compact td { padding: 6px 10px; }
+    .footer { padding: 28px 42px 34px; background: #161719; color: #fff; }
+    .footer strong { color: #d8bc7b; }
+    .small { color: #c9c9c9; font-size: 12px; margin-top: 10px; }
+
+    .price-table th:not(:first-child) { text-align: center; vertical-align: middle; }
+    .price-table td:not(:first-child) { text-align: center; }
+    .price-table td:nth-last-child(-n+2) { font-weight: 800; color: #245d38; white-space: nowrap; }
+    @page { size: A4; margin: 11mm; }
+    @media print {
+      body { background: #fff; }
+      .doc { box-shadow: none; margin: 0; max-width: none; }
+      .nav { display: none; }
+      .hero { padding: 18mm 12mm 12mm; }
+      h1 { font-size: 30px; }
+      .summary { grid-template-columns: repeat(5, 1fr); padding: 8mm 0 0; gap: 6px; }
+      .section { padding: 10mm 0 0; }
+      .brand-card { break-inside: avoid; page-break-inside: avoid; }
+      table { font-size: 8.7px; }
+      th { font-size: 7.6px; padding: 5px; }
+      td { padding: 4px 5px; }
+      .section h2 { font-size: 24px; }
+      .brand-card h3 { font-size: 17px; }
+      .count { font-size: 18px; }
+    }
+    @media (max-width: 800px) {
+      .doc { margin: 0; }
+      .hero, .nav, .section, .summary, .footer { padding-left: 18px; padding-right: 18px; }
+      h1 { font-size: 31px; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .brand-card-head { flex-direction: column; }
+    }
+
+    th { text-align: center; vertical-align: middle; }
+    th.name-col { text-align: left; }
+</style>
+</head>
+<body>
+<div class="doc">
+<header class="hero">
+<div class="kicker">ООО «Компания Кофе и Чая» / Don't Worry Group</div>
+<h1>Прайс-лист</h1>
+<p class="lead">Ассортимент для HoReCa, офисов, ресторанов, отелей и корпоративных клиентов: кофе, чай, молоко и альтернатива, сиропы и кордиалы, вода и напитки.</p>
+</header>
+<nav class="nav">
+{% for s in sections %}
+<a href="#{{ s.id }}">{{ s.icon }} {{ s.title_ru }}</a>
+{% endfor %}
+</nav>
+<section class="summary">
+{% for s in sections %}
+{% set count = counts.get(s.id, 0) %}
+<div class="summary-card"><div class="icon">{{ s.icon }}</div><strong>{{ count }}</strong><span>{{ s.title_ru }}</span></div>
+{% endfor %}
+</section>
+{% for s in sections %}
+<section class="section" id="{{ s.id }}">
+<div class="section-head">
+<div class="section-icon">{{ s.icon }}</div>
+<div>
+<h2>{{ s.title_ru }}</h2>
+</div>
+</div>
+{% for b in brands if b.section_id == s.id %}
+{% set prods = products_by_brand.get(b.id, []) %}
+<article class="brand-card">
+<div class="brand-card-head">
+<div>
+<h3>{{ b.title_ru }}</h3>
+{% if b.subtitle_ru %}
+<p>{{ b.subtitle_ru }}</p>
+{% endif %}
+</div>
+<div class="count">{{ prods|length }}<span>поз.</span></div>
+</div>
+<div class="table-wrap">
+<table class="price-table">
+<thead><tr>
+<th class="name-col">НАИМЕНОВАНИЕ</th>
+{% for key in b.attr_keys %}
+<th>{{ key }}</th>
+{% endfor %}
+{% for pi in b.price_col_indices %}
+{% set h = b.column_headers[pi] %}
+<th>{{ h }}</th>
+{% endfor %}
+</tr></thead>
+<tbody>
+{% for p in prods %}
+<tr>
+<td>{{ p.name_ru }}</td>
+{% for key in b.attr_keys %}
+<td>{{ p.attrs.get(key, '') }}</td>
+{% endfor %}
+<td>{{ p.price_1_fmt }}</td>
+{% if b.has_dual_pricing and b.price_col_indices|length >= 2 %}
+<td>{{ p.price_2_fmt }}</td>
+{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</article>
+{% endfor %}
+</section>
+{% endfor %}
+</div>
+</body>
+</html>

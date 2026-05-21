@@ -1,0 +1,26 @@
+# Secrets
+.env
+*.json
+!pyproject.toml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Streamlit
+.streamlit/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Generated HTML exports
+Единый прайс (*).html
