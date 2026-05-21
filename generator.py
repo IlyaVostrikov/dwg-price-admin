@@ -2,13 +2,13 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
+from db import SqliteBackend
 from parser import format_price
-from sheets import SheetsBackend
 
 TEMPLATE_DIR = Path(__file__).resolve().parent / 'templates'
 
 
-def generate_html(backend: SheetsBackend) -> str:
+def generate_html(backend: SqliteBackend) -> str:
     sections = backend.get_sections()
     sections = [s for s in sections if s['visible']]
     sections.sort(key=lambda s: s['sort_order'])
@@ -70,7 +70,7 @@ def generate_html(backend: SheetsBackend) -> str:
     )
 
 
-def get_html_preview(backend: SheetsBackend, lines: int = 50) -> str:
+def get_html_preview(backend: SqliteBackend, lines: int = 50) -> str:
     html = generate_html(backend)
     html_lines = html.split('\n')
     preview = '\n'.join(html_lines[:lines])

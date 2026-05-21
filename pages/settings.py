@@ -6,15 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from sheets import SheetsBackend
+from db import SqliteBackend
 
 
 @st.cache_resource
-def get_backend() -> SheetsBackend:
-    return SheetsBackend(
-        sheet_id=os.getenv('PRICE_LIST_SHEET_ID', ''),
-        credentials_path=os.getenv('GOOGLE_SERVICE_ACCOUNT_KEY_PATH', ''),
-    )
+def get_backend() -> SqliteBackend:
+    return SqliteBackend(os.getenv('DB_PATH', 'pricelist.db'))
 
 
 st.title('Управление видимостью')

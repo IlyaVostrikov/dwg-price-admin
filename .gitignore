@@ -1,7 +1,8 @@
 # Secrets
 .env
-*.json
-!pyproject.toml
+
+# Database
+*.db
 
 # Python
 __pycache__/

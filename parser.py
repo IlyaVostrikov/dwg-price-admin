@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 from bs4 import BeautifulSoup, Tag
 
-from sheets import SheetsBackend
+from db import SqliteBackend
 
 _PRICE_RE = re.compile(r"(\d[\d\s]*)\s*(?:[рpPР][уy]?[бb]?\.?|₽)")
 _PRICE_LABEL_RE = re.compile(
@@ -235,8 +235,8 @@ class PriceListParser:
         return products
 
 
-def import_to_sheets(
-    html_path: str, backend: SheetsBackend
+def import_to_db(
+    html_path: str, backend: SqliteBackend
 ) -> dict:
     parser = PriceListParser(html_path)
     catalog = parser.parse()
@@ -318,17 +318,16 @@ def import_to_sheets(
 
 if __name__ == '__main__':
     import sys
-    from dotenv import load_dotenv
-    load_dotenv()
 
-    sheet_id = os.getenv('PRICE_LIST_SHEET_ID', '')
-    creds_path = os.getenv('GOOGLE_SERVICE_ACCOUNT_KEY_PATH', '')
+    from db import SqliteBackend
+
+    db_path = os.getenv('DB_PATH', 'pricelist.db')
     html_path = os.getenv('SOURCE_HTML_PATH', 'Единый прайс.html')
 
-    if not sheet_id or not creds_path:
-        print('Set PRICE_LIST_SHEET_ID and GOOGLE_SERVICE_ACCOUNT_KEY_PATH in .env')
+    if not os.path.exists(html_path):
+        print(f'HTML file not found: {html_path}')
         sys.exit(1)
 
-    backend = SheetsBackend(sheet_id, creds_path)
-    result = import_to_sheets(html_path, backend)
+    backend = SqliteBackend(db_path)
+    result = import_to_db(html_path, backend)
     print(f'Import complete: {result}')

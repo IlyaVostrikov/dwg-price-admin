@@ -7,16 +7,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from generator import generate_html
-from parser import import_to_sheets
-from sheets import SheetsBackend
+from parser import import_to_db
+from db import SqliteBackend
 
 
 @st.cache_resource
-def get_backend() -> SheetsBackend:
-    return SheetsBackend(
-        sheet_id=os.getenv('PRICE_LIST_SHEET_ID', ''),
-        credentials_path=os.getenv('GOOGLE_SERVICE_ACCOUNT_KEY_PATH', ''),
-    )
+def get_backend() -> SqliteBackend:
+    return SqliteBackend(os.getenv('DB_PATH', 'pricelist.db'))
 
 
 st.title('Импорт / Экспорт')
@@ -26,7 +23,7 @@ backend = get_backend()
 tab1, tab2 = st.tabs(['Импорт из HTML', 'Экспорт в HTML'])
 
 with tab1:
-    st.subheader('Импорт прайс-листа в Google Sheets')
+    st.subheader('Импорт прайс-листа в базу данных')
 
     html_path = st.text_input(
         'Путь к HTML-файлу',
@@ -42,17 +39,17 @@ with tab1:
         )
 
     st.warning(
-        '⚠️ Импорт **перезапишет** все данные в Google Sheets '
+        '⚠️ Импорт **перезапишет** все данные в базе данных '
         '(секции, бренды, товары). Текущие наценки будут потеряны.'
     )
 
-    if st.button('📥 Импортировать в Google Sheets', type='primary'):
+    if st.button('📥 Импортировать в базу данных', type='primary'):
         if not os.path.exists(html_path):
             st.error(f'Файл не найден: {html_path}')
         else:
-            with st.spinner('Парсинг HTML и запись в Google Sheets...'):
+            with st.spinner('Парсинг HTML и запись в базу данных...'):
                 try:
-                    result = import_to_sheets(html_path, backend)
+                    result = import_to_db(html_path, backend)
                     st.success(
                         f'Импорт завершён!\n\n'
                         f'- Секций: {result["sections_created"]}\n'
