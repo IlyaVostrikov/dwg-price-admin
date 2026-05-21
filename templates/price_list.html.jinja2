@@ -6,24 +6,26 @@
 <title>Прайс-лист — ООО «Компания Кофе и Чая»</title>
 <style>
     :root {
-      --bg: #f5f5f7;
-      --card: #ffffff;
-      --ink: #1d1d1f;
-      --ink-secondary: #6e6e73;
-      --ink-tertiary: #86868b;
-      --line: #e5e5ea;
-      --line-light: #f0f0f2;
-      --accent: #0071e3;
-      --accent-light: #e8f2fd;
+      --bg: #09090b;
+      --surface: #131315;
+      --surface-hover: #1a1a1e;
+      --card: #161618;
+      --card-border: rgba(255,255,255,0.06);
+      --ink: #f5f5f7;
+      --ink-secondary: #a1a1a6;
+      --ink-tertiary: #6e6e73;
+      --line: rgba(255,255,255,0.08);
+      --line-light: rgba(255,255,255,0.04);
+      --accent: #d4a04b;
+      --accent-glow: rgba(212,160,75,0.15);
+      --accent-soft: rgba(212,160,75,0.10);
       --green: #30a158;
-      --green-bg: #e9f7ef;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
-      --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+      --green-soft: rgba(48,161,88,0.12);
       --radius-sm: 12px;
       --radius-md: 18px;
       --radius-lg: 24px;
       --radius-pill: 980px;
+      --transition: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     html { scroll-behavior: smooth; }
@@ -35,101 +37,133 @@
       line-height: 1.47059;
       font-weight: 400;
       letter-spacing: -0.01em;
+      padding-bottom: 120px;
     }
-    .doc { max-width: 1120px; margin: 40px auto 60px; }
+    .doc { max-width: 1120px; margin: 0 auto; }
+
+    /* ---- Manager Banner ---- */
+    .order-banner {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(135deg, #1a1208 0%, #1a140a 100%);
+      border-bottom: 1px solid var(--accent);
+      padding: 14px 48px;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .order-banner.visible { display: block; }
+    .order-banner strong { color: var(--ink); }
+    .order-banner .dismiss-banner {
+      margin-left: 16px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--ink-secondary);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      font-size: 12px;
+      transition: var(--transition);
+    }
+    .order-banner .dismiss-banner:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ---- Hero ---- */
     .hero {
-      padding: 56px 48px 40px;
-      text-align: center;
-      background: transparent;
+      padding: 60px 48px 44px;
+      text-align: left;
+      max-width: 720px;
     }
     .hero-badge {
       display: inline-block;
-      background: var(--card);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: var(--radius-pill);
-      padding: 6px 16px;
+      padding: 5px 14px;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
+      font-weight: 500;
+      color: var(--ink-tertiary);
       letter-spacing: 0;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
     }
     .hero h1 {
-      margin: 0 0 10px;
-      font-size: 56px;
+      margin: 0 0 14px;
+      font-size: 52px;
       font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.1;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
       color: var(--ink);
     }
     .hero .lead {
-      margin: 0 auto;
-      max-width: 620px;
-      font-size: 19px;
-      line-height: 1.45;
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.5;
       color: var(--ink-secondary);
       font-weight: 400;
       letter-spacing: -0.01em;
+      max-width: 560px;
     }
 
     /* ---- Nav ---- */
     .nav-wrap {
       position: sticky;
-      top: 0;
-      z-index: 20;
+      top: 12px;
+      z-index: 30;
       padding: 0 48px;
       margin-bottom: 28px;
     }
     .nav {
-      display: flex;
-      gap: 8px;
+      display: inline-flex;
+      gap: 6px;
       flex-wrap: wrap;
-      background: rgba(255,255,255,0.72);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(22,22,24,0.78);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
       border-radius: var(--radius-pill);
-      padding: 8px 10px;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.04);
+      padding: 6px 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
     }
     .nav a {
       text-decoration: none;
-      color: var(--ink);
+      color: var(--ink-secondary);
       font-weight: 500;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: -0.01em;
       border-radius: var(--radius-pill);
-      padding: 9px 18px;
-      transition: all 0.15s ease;
+      padding: 8px 16px;
+      transition: var(--transition);
     }
-    .nav a:hover {
-      background: var(--accent);
-      color: #fff;
-    }
+    .nav a:hover { background: rgba(255,255,255,0.06); color: var(--ink); }
 
     /* ---- Summary ---- */
     .summary {
       display: grid;
       grid-template-columns: repeat({{ sections|length }}, 1fr);
-      gap: 14px;
+      gap: 12px;
       padding: 0 48px 8px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
     {% if sections|length > 5 %}
     @media (min-width: 801px) { .summary { grid-template-columns: repeat(5, 1fr); } }
     {% endif %}
     .summary-card {
       background: var(--card);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
       padding: 18px 20px 16px;
-      box-shadow: var(--shadow-sm);
-      transition: box-shadow 0.2s ease;
+      transition: var(--transition);
+      cursor: default;
     }
-    .summary-card:hover { box-shadow: var(--shadow-md); }
-    .summary-card .icon { font-size: 26px; margin-bottom: 8px; line-height: 1; }
+    .summary-card:hover { border-color: rgba(255,255,255,0.10); background: var(--surface-hover); }
+    .summary-card .icon { font-size: 24px; margin-bottom: 10px; line-height: 1; }
     .summary-card strong {
-      font-size: 34px;
+      font-size: 32px;
       font-weight: 700;
       letter-spacing: -0.025em;
       color: var(--ink);
@@ -138,14 +172,14 @@
     }
     .summary-card span {
       color: var(--ink-tertiary);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      margin-top: 4px;
+      margin-top: 6px;
       display: block;
     }
 
     /* ---- Section ---- */
-    .section { padding: 0 48px 32px; page-break-before: always; }
+    .section { padding: 0 48px 24px; page-break-before: always; }
     .section:first-of-type { page-break-before: auto; }
     .section-head {
       display: flex;
@@ -154,47 +188,68 @@
       padding-bottom: 20px;
       margin-bottom: 20px;
       border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition);
     }
+    .section-head:hover { border-bottom-color: rgba(255,255,255,0.14); }
     .section-icon {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: var(--radius-sm);
       display: grid;
       place-items: center;
-      background: var(--card);
-      font-size: 22px;
-      box-shadow: var(--shadow-sm);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      font-size: 20px;
+      flex-shrink: 0;
     }
     .section h2 {
       margin: 0;
-      font-size: 34px;
+      font-size: 30px;
       font-weight: 700;
       letter-spacing: -0.025em;
       line-height: 1.1;
+      flex: 1;
+      transition: color var(--transition);
     }
+    .section-chevron {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      transition: transform var(--transition);
+      opacity: 0.4;
+      flex-shrink: 0;
+    }
+    .section.collapsed .section-chevron { transform: rotate(-90deg); }
+    .section.collapsed .section-brands { display: none; }
 
     /* ---- Brand Card ---- */
     .brand-card {
       background: var(--card);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-lg);
-      margin: 0 0 24px;
+      margin: 0 0 20px;
       overflow: hidden;
-      box-shadow: var(--shadow-md);
       page-break-inside: avoid;
-      transition: box-shadow 0.2s ease;
+      transition: border-color var(--transition);
     }
-    .brand-card:hover { box-shadow: var(--shadow-lg); }
+    .brand-card:hover { border-color: rgba(255,255,255,0.10); }
     .brand-card-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 20px;
-      padding: 22px 24px;
-      border-bottom: 1px solid var(--line-light);
+      padding: 20px 22px;
+      cursor: pointer;
+      user-select: none;
+      transition: background var(--transition);
     }
+    .brand-card-head:hover { background: rgba(255,255,255,0.015); }
     .brand-card h3 {
       margin: 0;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       letter-spacing: -0.02em;
       line-height: 1.2;
@@ -202,25 +257,37 @@
     .brand-card-head p {
       margin: 5px 0 0;
       color: var(--ink-tertiary);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 400;
       letter-spacing: -0.01em;
     }
+    .brand-chevron {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      transition: transform var(--transition);
+      opacity: 0.3;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .brand-card.collapsed .brand-chevron { transform: rotate(-90deg); }
+    .brand-card.collapsed .table-wrap { display: none; }
     .count {
-      min-width: 56px;
+      min-width: 52px;
       text-align: center;
       border-radius: var(--radius-pill);
-      background: #f2f2f5;
-      font-size: 22px;
+      background: rgba(255,255,255,0.04);
+      font-size: 20px;
       font-weight: 700;
-      padding: 10px 14px;
+      padding: 8px 14px;
       line-height: 1;
       letter-spacing: -0.02em;
       color: var(--ink);
     }
     .count span {
       display: block;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 500;
       margin-top: 4px;
       text-transform: lowercase;
@@ -232,37 +299,67 @@
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
     th {
-      background: #f5f5f7;
-      color: var(--ink-secondary);
+      background: var(--surface);
+      color: var(--ink-tertiary);
       text-align: left;
-      padding: 11px 14px;
-      font-size: 11px;
+      padding: 10px 12px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       border-bottom: 1px solid var(--line);
+      white-space: nowrap;
     }
-    th:not(:first-child) { text-align: center; }
+    th:not(.name-col):not(.check-col) { text-align: center; }
+    .check-col { width: 40px; text-align: center; padding: 10px 6px; }
     td {
-      padding: 12px 14px;
+      padding: 11px 12px;
       border-bottom: 1px solid var(--line-light);
       vertical-align: top;
       font-size: 14px;
+      transition: background var(--transition);
     }
-    td:not(:first-child) { text-align: center; }
-    tbody tr:nth-child(even) td { background: rgba(0,0,0,0.012); }
-    tbody tr:hover td { background: #f0f4ff; }
-    .price-table td:last-child,
-    .price-table td:nth-last-child(2) {
+    td:not(.name-col):not(.check-col) { text-align: center; }
+    tbody tr:nth-child(even) td { background: rgba(255,255,255,0.012); }
+    tbody tr:hover td { background: rgba(255,255,255,0.03); }
+    tbody tr.selected td { background: var(--accent-soft); }
+    tbody tr.selected:hover td { background: var(--accent-glow); }
+    .price-table td.price-col {
       font-weight: 600;
       color: var(--green);
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
-    .price-table th:last-child,
-    .price-table th:nth-last-child(2) { text-align: center; }
-
     .name-col { text-align: left !important; }
+    .check-col input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid rgba(255,255,255,0.18);
+      border-radius: 5px;
+      background: transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .check-col input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .check-col input[type="checkbox"]:checked::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 9px;
+      border: solid #09090b;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translateY(-1px);
+    }
+    .check-col input[type="checkbox"]:hover { border-color: rgba(255,255,255,0.35); }
+    .check-col input[type="checkbox"]:active { transform: scale(0.9); }
 
     /* ---- Footer ---- */
     .footer {
@@ -271,55 +368,232 @@
       border-top: 1px solid var(--line);
       color: var(--ink-tertiary);
       font-size: 12px;
-      text-align: center;
     }
     .footer strong { color: var(--ink-secondary); font-weight: 600; }
+
+    /* ---- Basket Panel ---- */
+    .basket {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+      background: rgba(19,19,21,0.86);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: none;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.4);
+      transition: transform var(--transition), opacity var(--transition);
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .basket.visible { display: flex; }
+    .basket-count {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: #09090b;
+      font-weight: 700;
+      font-size: 16px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .basket-info { line-height: 1.3; }
+    .basket-info .basket-label { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .basket-info .basket-hint { font-size: 11px; color: var(--ink-tertiary); }
+    .basket-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: var(--accent);
+      color: #09090b;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .basket-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .basket-btn:active { transform: scale(0.97); }
+    .basket-clear {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.10);
+      color: var(--ink-tertiary);
+      padding: 8px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      font-size: 12px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .basket-clear:hover { border-color: rgba(255,255,255,0.2); color: var(--ink-secondary); }
+
+    /* ---- Modal ---- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal h3 { margin: 0 0 8px; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+    .modal .modal-sub { margin: 0 0 24px; color: var(--ink-tertiary); font-size: 13px; }
+    .modal .field { margin-bottom: 16px; }
+    .modal label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      letter-spacing: 0.01em;
+    }
+    .modal input, .modal textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 14px;
+      font-family: inherit;
+      transition: var(--transition);
+      outline: none;
+    }
+    .modal input:focus, .modal textarea:focus { border-color: var(--accent); }
+    .modal textarea { resize: vertical; min-height: 80px; }
+    .modal .error-text { color: #e5484d; font-size: 12px; margin-top: 4px; display: none; }
+    .modal .error-text.show { display: block; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 8px; }
+    .modal-btn-primary {
+      flex: 1;
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: var(--accent);
+      color: #09090b;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .modal-btn-primary:hover { filter: brightness(1.1); }
+    .modal-btn-primary:active { transform: scale(0.97); }
+    .modal-btn-secondary {
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: transparent;
+      color: var(--ink-secondary);
+      font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .modal-btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--ink); }
+
+    /* ---- Success State ---- */
+    .success-toast {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      right: 24px;
+      z-index: 250;
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 14px;
+      animation: modalIn 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .success-toast.show { display: block; }
 
     /* ---- Print ---- */
     @page { size: A4; margin: 11mm; }
     @media print {
-      body { background: #fff; color: #000; }
+      body { background: #fff; color: #000; padding-bottom: 0; }
       .doc { box-shadow: none; margin: 0; max-width: none; }
-      .nav-wrap { display: none; }
-      .hero { padding: 12mm 0 8mm; text-align: left; }
-      .hero h1 { font-size: 24px; }
-      .hero .lead { font-size: 11px; }
-      .hero-badge { display: none; }
+      .nav-wrap, .basket, .modal-overlay, .success-toast, .order-banner { display: none !important; }
+      .check-col { display: none; }
+      .hero { padding: 12mm 0 8mm; }
+      .hero h1 { font-size: 24px; color: #000; }
+      .hero .lead { font-size: 11px; color: #555; }
+      .hero-badge { background: #eee; border-color: #ccc; color: #555; }
       .summary { grid-template-columns: repeat(5, 1fr); padding: 4mm 0 0; gap: 4px; }
-      .summary-card { box-shadow: none; border: 1px solid #ddd; padding: 8px 10px; }
-      .summary-card strong { font-size: 20px; }
+      .summary-card { background: #fff; border: 1px solid #ddd; }
+      .summary-card strong { color: #000; }
+      .summary-card span { color: #666; }
       .section { padding: 6mm 0 0; }
-      .section h2 { font-size: 18px; }
-      .section-icon { box-shadow: none; }
-      .brand-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; page-break-inside: avoid; margin-bottom: 12px; }
-      .brand-card-head { padding: 10px 12px; }
-      .brand-card h3 { font-size: 15px; }
+      .section h2 { font-size: 18px; color: #000; }
+      .section-icon { background: #f5f5f5; border-color: #ddd; }
+      .section-head { cursor: default; border-color: #ddd; }
+      .section-chevron, .brand-chevron { display: none; }
+      .section.collapsed .section-brands { display: block !important; }
+      .brand-card { background: #fff; border: 1px solid #ddd; box-shadow: none; margin-bottom: 12px; }
+      .brand-card.collapsed .table-wrap { display: block !important; }
+      .brand-card h3 { font-size: 15px; color: #000; }
+      .brand-card-head { cursor: default; background: #fafafa; }
       table { font-size: 9px; }
-      th { font-size: 7.5px; padding: 5px 6px; }
-      td { padding: 5px 6px; font-size: 9px; }
-      .count { font-size: 15px; padding: 6px 8px; }
-      .footer { border-top: 1px solid #ccc; padding: 8mm 0; }
-      .nav { display: none; }
+      th { font-size: 7.5px; padding: 5px 6px; background: #f5f5f5; color: #555; }
+      td { padding: 5px 6px; font-size: 9px; color: #000; }
+      td.price-col { color: #1a6b35; }
+      tbody tr:nth-child(even) td { background: #fafafa; }
+      tbody tr.selected td { background: #fff8e1 !important; }
+      .count { background: #f5f5f5; }
+      .footer { border-top: 1px solid #ccc; padding: 8mm 0; color: #666; }
     }
 
     /* ---- Mobile ---- */
     @media (max-width: 800px) {
-      .doc { margin: 16px 0; }
-      .hero, .nav-wrap, .section, .summary, .footer { padding-left: 20px; padding-right: 20px; }
+      .doc { margin: 0; }
+      .hero, .nav-wrap, .section, .summary, .footer { padding-left: 18px; padding-right: 18px; }
       .hero { padding-top: 36px; padding-bottom: 28px; }
-      .hero h1 { font-size: 36px; }
-      .hero .lead { font-size: 16px; }
-      .summary { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .hero h1 { font-size: 34px; }
+      .hero .lead { font-size: 15px; }
+      .summary { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .brand-card-head { flex-direction: column; }
-      .section h2 { font-size: 26px; }
-      .nav { border-radius: 24px; }
+      .section h2 { font-size: 24px; }
+      .basket { left: 12px; right: 12px; bottom: 12px; border-radius: var(--radius-lg); flex-wrap: wrap; }
+      .modal { width: calc(100% - 32px); margin: 16px; padding: 24px; }
     }
-
-    th { text-align: center; vertical-align: middle; }
-    th.name-col { text-align: left; }
 </style>
 </head>
 <body>
+
+<!-- Manager order banner (hidden unless order data detected) -->
+<div class="order-banner" id="orderBanner">
+  <span id="orderBannerText"></span>
+  <button class="dismiss-banner" onclick="dismissBanner()">Скрыть</button>
+</div>
+
 <div class="doc">
 
 <header class="hero">
@@ -349,26 +623,36 @@
 
 {% for s in sections %}
 <section class="section" id="{{ s.id }}">
-<div class="section-head">
+<div class="section-head" onclick="toggleSection(this)">
 <div class="section-icon">{{ s.icon }}</div>
 <h2>{{ s.title_ru }}</h2>
+<div class="section-chevron">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5.5 3L10.5 8L5.5 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </div>
+</div>
+<div class="section-brands">
 
 {% for b in brands if b.section_id == s.id %}
 {% set prods = products_by_brand.get(b.id, []) %}
-<article class="brand-card">
-<div class="brand-card-head">
+<article class="brand-card" data-brand="{{ b.id }}">
+<div class="brand-card-head" onclick="toggleBrand(this)">
 <div>
 <h3>{{ b.title_ru }}</h3>
 {% if b.subtitle_ru %}
 <p>{{ b.subtitle_ru }}</p>
 {% endif %}
 </div>
+<div style="display:flex;align-items:center;gap:10px;">
 <div class="count">{{ prods|length }}<span>поз.</span></div>
+<div class="brand-chevron">
+<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5.5 3L10.5 8L5.5 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+</div>
 </div>
 <div class="table-wrap">
 <table class="price-table">
 <thead><tr>
+<th class="check-col"></th>
 <th class="name-col">НАИМЕНОВАНИЕ</th>
 {% for key in b.attr_keys %}
 <th>{{ key }}</th>
@@ -380,14 +664,15 @@
 </tr></thead>
 <tbody>
 {% for p in prods %}
-<tr>
+<tr data-product-id="{{ p.id }}" data-brand="{{ b.id }}" data-name="{{ p.name_ru }}" data-price="{{ p.price_1_fmt }}" data-section="{{ s.title_ru }}" data-brand-title="{{ b.title_ru }}">
+<td class="check-col"><input type="checkbox" onchange="onCheckbox(this)"/></td>
 <td>{{ p.name_ru }}</td>
 {% for key in b.attr_keys %}
 <td>{{ p.attrs.get(key, '') }}</td>
 {% endfor %}
-<td>{{ p.price_1_fmt }}</td>
+<td class="price-col">{{ p.price_1_fmt }}</td>
 {% if b.has_dual_pricing and b.price_col_indices|length >= 2 %}
-<td>{{ p.price_2_fmt }}</td>
+<td class="price-col">{{ p.price_2_fmt }}</td>
 {% endif %}
 </tr>
 {% endfor %}
@@ -396,13 +681,284 @@
 </div>
 </article>
 {% endfor %}
+</div>
 </section>
 {% endfor %}
 </div>
 
 <footer class="footer">
-<strong>ООО «Компания Кофе и Чая»</strong> / Don't Worry Group &nbsp;·&nbsp; Прайс-лист &nbsp;·&nbsp; Актуально на дату экспорта
+<strong>ООО «Компания Кофе и Чая»</strong> / Don't Worry Group &nbsp;&middot;&nbsp; Прайс-лист &nbsp;&middot;&nbsp; Актуально на дату экспорта
 </footer>
+
+<!-- Basket -->
+<div class="basket" id="basket">
+  <div class="basket-count" id="basketCount">0</div>
+  <div class="basket-info">
+    <div class="basket-label" id="basketLabel">Ничего не выбрано</div>
+    <div class="basket-hint">Отметьте товары на дегустацию</div>
+  </div>
+  <button class="basket-btn" onclick="openOrderModal()" id="basketBtn" disabled>Отправить</button>
+  <button class="basket-clear" onclick="clearSelection()" title="Очистить">&#10005;</button>
+</div>
+
+<!-- Order Modal -->
+<div class="modal-overlay" id="orderModal">
+<div class="modal">
+<h3>Заказ на дегустацию</h3>
+<p class="modal-sub" id="modalCount">Выбрано товаров: 0</p>
+<form onsubmit="submitOrder(event)">
+<div class="field">
+<label for="clientName">Имя</label>
+<input type="text" id="clientName" required placeholder="Иван Петров"/>
+<div class="error-text" id="nameError">Введите имя</div>
+</div>
+<div class="field">
+<label for="clientCompany">Компания</label>
+<input type="text" id="clientCompany" required placeholder="ООО Кофейня"/>
+<div class="error-text" id="companyError">Введите название компании</div>
+</div>
+<div class="field">
+<label for="clientPhone">Телефон</label>
+<input type="tel" id="clientPhone" required placeholder="+7 999 123-45-67"/>
+<div class="error-text" id="phoneError">Введите телефон</div>
+</div>
+<div class="field">
+<label for="clientNote">Комментарий (необязательно)</label>
+<textarea id="clientNote" placeholder="Когда удобно провести дегустацию? Особые пожелания..."></textarea>
+</div>
+<div class="modal-actions">
+<button type="button" class="modal-btn-secondary" onclick="closeOrderModal()">Отмена</button>
+<button type="submit" class="modal-btn-primary">Скачать заказ</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Success Toast -->
+<div class="success-toast" id="successToast">
+  Файл заказа скачан. Отправьте его менеджеру.
+</div>
+
+<script>
+(function(){
+  var selected = {};
+
+  window.onCheckbox = function(cb) {
+    var tr = cb.closest('tr');
+    var pid = tr.dataset.productId;
+    if (cb.checked) {
+      selected[pid] = {
+        name: tr.dataset.name,
+        brand: tr.dataset.brandTitle,
+        section: tr.dataset.section,
+        price: tr.dataset.price,
+        brandId: tr.dataset.brand
+      };
+      tr.classList.add('selected');
+    } else {
+      delete selected[pid];
+      tr.classList.remove('selected');
+    }
+    updateBasket();
+  };
+
+  window.toggleSection = function(head) {
+    var section = head.closest('.section');
+    section.classList.toggle('collapsed');
+  };
+
+  window.toggleBrand = function(head) {
+    var card = head.closest('.brand-card');
+    card.classList.toggle('collapsed');
+  };
+
+  window.clearSelection = function() {
+    selected = {};
+    document.querySelectorAll('tbody tr.selected').forEach(function(tr){ tr.classList.remove('selected'); });
+    document.querySelectorAll('.check-col input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
+    updateBasket();
+  };
+
+  window.openOrderModal = function() {
+    var count = Object.keys(selected).length;
+    if (!count) return;
+    document.getElementById('modalCount').textContent = 'Выбрано товаров: ' + count;
+    document.getElementById('orderModal').classList.add('open');
+  };
+
+  window.closeOrderModal = function() {
+    document.getElementById('orderModal').classList.remove('open');
+    hideAllErrors();
+  };
+
+  window.submitOrder = function(e) {
+    e.preventDefault();
+    var name = document.getElementById('clientName').value.trim();
+    var company = document.getElementById('clientCompany').value.trim();
+    var phone = document.getElementById('clientPhone').value.trim();
+    var note = document.getElementById('clientNote').value.trim();
+
+    hideAllErrors();
+    var valid = true;
+    if (!name) { showError('nameError'); valid = false; }
+    if (!company) { showError('companyError'); valid = false; }
+    if (!phone) { showError('phoneError'); valid = false; }
+    if (!valid) return;
+
+    var count = Object.keys(selected).length;
+    if (!count) return;
+
+    var products = [];
+    for (var pid in selected) {
+      if (selected.hasOwnProperty(pid)) {
+        products.push(selected[pid]);
+      }
+    }
+    products.sort(function(a,b){ return a.section.localeCompare(b.section) || a.brand.localeCompare(b.brand); });
+
+    var orderData = {
+      clientName: name,
+      clientCompany: company,
+      clientPhone: phone,
+      clientNote: note,
+      products: products,
+      createdAt: new Date().toISOString()
+    };
+
+    downloadOrderFile(orderData);
+    closeOrderModal();
+    showSuccessToast();
+  };
+
+  function downloadOrderFile(orderData) {
+    var html = document.documentElement.outerHTML;
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(html, 'text/html');
+
+    var existing = doc.getElementById('order-data');
+    if (existing) existing.remove();
+
+    var script = doc.createElement('script');
+    script.id = 'order-data';
+    script.type = 'application/json';
+    script.textContent = JSON.stringify(orderData, null, 2);
+    doc.head.appendChild(script);
+
+    var blob = new Blob(['<!DOCTYPE html>\n' + doc.documentElement.outerHTML], {type: 'text/html;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var safeCompany = orderData.clientCompany.replace(/[^a-z0-9а-я]/gi, '_').substring(0, 30);
+    a.download = 'Заказ на дегустацию - ' + safeCompany + '.html';
+    a.href = url;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function updateBasket() {
+    var count = Object.keys(selected).length;
+    var basket = document.getElementById('basket');
+    var countEl = document.getElementById('basketCount');
+    var labelEl = document.getElementById('basketLabel');
+    var btn = document.getElementById('basketBtn');
+
+    countEl.textContent = count;
+    if (count > 0) {
+      basket.classList.add('visible');
+      labelEl.textContent = count + ' ' + plural(count, ['позиция','позиции','позиций']);
+      btn.disabled = false;
+    } else {
+      basket.classList.remove('visible');
+      labelEl.textContent = 'Ничего не выбрано';
+      btn.disabled = true;
+    }
+  }
+
+  function plural(n, forms) {
+    n = Math.abs(n) % 100;
+    var n1 = n % 10;
+    if (n > 10 && n < 20) return forms[2];
+    if (n1 > 1 && n1 < 5) return forms[1];
+    if (n1 === 1) return forms[0];
+    return forms[2];
+  }
+
+  function showError(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.add('show');
+  }
+
+  function hideAllErrors() {
+    document.querySelectorAll('.error-text').forEach(function(el){ el.classList.remove('show'); });
+  }
+
+  function showSuccessToast() {
+    var toast = document.getElementById('successToast');
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 4000);
+  }
+
+  window.dismissBanner = function() {
+    document.getElementById('orderBanner').classList.remove('visible');
+  };
+
+  // ---- Manager view: detect incoming order ----
+  var orderScript = document.getElementById('order-data');
+  if (orderScript) {
+    try {
+      var order = JSON.parse(orderScript.textContent);
+      var banner = document.getElementById('orderBanner');
+      var bannerText = document.getElementById('orderBannerText');
+      bannerText.innerHTML =
+        '<strong>Заказ на дегустацию</strong> &mdash; ' +
+        escapeHtml(order.clientName) + ', ' +
+        escapeHtml(order.clientCompany) + ', ' +
+        escapeHtml(order.clientPhone) +
+        (order.clientNote ? ' &middot; ' + escapeHtml(order.clientNote) : '') +
+        ' &nbsp;&middot;&nbsp; <strong>' + order.products.length + ' ' + plural(order.products.length, ['позиция','позиции','позиций']) + '</strong>';
+      banner.classList.add('visible');
+
+      // Highlight selected products
+      var selectedPids = {};
+      order.products.forEach(function(p){
+        selectedPids[p.name] = true;
+      });
+      document.querySelectorAll('tbody tr[data-name]').forEach(function(tr){
+        if (selectedPids[tr.dataset.name]) {
+          tr.classList.add('selected');
+          tr.querySelector('input[type="checkbox"]').checked = true;
+        }
+      });
+      updateBasketFromOrder(order);
+    } catch(e) {}
+  }
+
+  function updateBasketFromOrder(order) {
+    order.products.forEach(function(p){
+      var found = false;
+      document.querySelectorAll('tbody tr[data-name]').forEach(function(tr){
+        if (tr.dataset.name === p.name && !found) {
+          found = true;
+          selected[tr.dataset.productId] = p;
+        }
+      });
+    });
+    updateBasket();
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  // Close modal on overlay click
+  document.getElementById('orderModal').addEventListener('click', function(e){
+    if (e.target === this) closeOrderModal();
+  });
+})();
+</script>
 
 </body>
 </html>
