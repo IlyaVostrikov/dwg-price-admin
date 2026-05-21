@@ -248,8 +248,8 @@ def import_to_db(
 
     # Write sections
     s_rows = [
-        [s['id'], s['title_ru'], s['icon'], str(s['sort_order']),
-         str(s['visible']).upper()]
+        [s['id'], s['title_ru'], s['icon'], int(s['sort_order']),
+         int(s['visible'])]
         for s in catalog.sections
     ]
     backend.batch_clear_and_write(
@@ -266,9 +266,9 @@ def import_to_db(
             b['section_id'],
             b['title_ru'],
             b['subtitle_ru'],
-            str(b['sort_order']),
-            str(b['visible']).upper(),
-            str(b['has_dual_pricing']).upper(),
+            int(b['sort_order']),
+            int(b['visible']),
+            int(b['has_dual_pricing']),
             json.dumps(b['column_headers'], ensure_ascii=False),
             json.dumps(b['price_col_indices'], ensure_ascii=False),
         ])
@@ -283,16 +283,16 @@ def import_to_db(
     p_rows = []
     for p in catalog.products:
         p_rows.append([
-            str(p['id']),
+            int(p['id']),
             p['brand_id'],
             p['name_ru'],
             json.dumps(p['attrs'], ensure_ascii=False),
-            str(p['price_1']),
-            str(p['price_2']) if p['price_2'] is not None else '',
-            str(p['price_1_original']),
-            str(p['price_2_original'])
-            if p['price_2_original'] is not None else '',
-            str(p['visible']).upper(),
+            int(p['price_1']),
+            int(p['price_2']) if p['price_2'] is not None else None,
+            int(p['price_1_original']),
+            int(p['price_2_original'])
+            if p['price_2_original'] is not None else None,
+            int(p['visible']),
         ])
     backend.batch_clear_and_write(
         'products',
