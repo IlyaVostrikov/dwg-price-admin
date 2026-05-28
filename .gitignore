@@ -26,6 +26,10 @@ Thumbs.db
 .DS_Store
 
 # Generated HTML exports
+index.html
+DWG_Price_List.html
 Единый прайс (*).html
 Заказ на дегустацию - *.html
 test_price.html
+
+.vercel

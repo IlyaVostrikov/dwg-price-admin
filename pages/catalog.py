@@ -99,7 +99,7 @@ if products:
         ),
         'Видимый': st.column_config.CheckboxColumn('Видимый'),
     }
-    if 'Цена 2 (руб)' in rows_data[0] if rows_data else False:
+    if rows_data and 'Цена 2 (руб)' in rows_data[0]:
         column_config['Цена 2 (руб)'] = st.column_config.NumberColumn(
             'Цена 2 (руб)', min_value=0, step=1, format='%d',
         )

@@ -1,0 +1,34 @@
+# Everything except index.html for static deploy
+*.py
+*.pyc
+*.db
+*.db-shm
+*.db-wal
+*.toml
+*.lock
+*.svg
+*.env
+*.swp
+*.swo
+
+# Directories
+__pycache__/
+.venv/
+venv/
+.git/
+.pytest_cache/
+.streamlit/
+.idea/
+.vscode/
+api/
+pages/
+templates/
+
+# Generated HTML (keep only index.html)
+DWG_Price_List.html
+*.html
+!index.html
+
+# OS
+Thumbs.db
+.DS_Store

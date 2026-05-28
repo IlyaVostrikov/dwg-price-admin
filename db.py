@@ -4,13 +4,18 @@ from datetime import datetime, timezone
 
 
 class SqliteBackend:
-    def __init__(self, db_path: str = 'pricelist.db') -> None:
+    def __init__(self, db_path: str = 'pricelist.db', read_only: bool = False) -> None:
         self.db_path = db_path
-        self._conn = sqlite3.connect(db_path, check_same_thread=False)
+        self.read_only = read_only
+        if read_only:
+            uri = f'file:{db_path}?mode=ro'
+            self._conn = sqlite3.connect(uri, uri=True, check_same_thread=False)
+        else:
+            self._conn = sqlite3.connect(db_path, check_same_thread=False)
+            self._conn.execute('PRAGMA journal_mode=WAL')
+            self._conn.execute('PRAGMA foreign_keys=ON')
+            self._init_tables()
         self._conn.row_factory = sqlite3.Row
-        self._conn.execute('PRAGMA journal_mode=WAL')
-        self._conn.execute('PRAGMA foreign_keys=ON')
-        self._init_tables()
 
     def _init_tables(self) -> None:
         self._conn.executescript('''
