@@ -11,6 +11,13 @@ st.set_page_config(
 
 
 def check_config() -> bool:
+    if os.getenv('BACKEND', 'sqlite') == 'sheets':
+        sheet_id = os.getenv('PRICE_LIST_SHEET_ID', '')
+        if not sheet_id:
+            st.error('PRICE_LIST_SHEET_ID не задан. Проверьте secrets на Streamlit Cloud.')
+            return False
+        return True
+
     db_path = os.getenv('DB_PATH', 'pricelist.db')
     if not os.path.exists(db_path):
         st.error(
