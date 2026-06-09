@@ -1,27 +1,66 @@
 import json
 import os
 from datetime import datetime, timezone
-from functools import lru_cache
 
-from google.oauth2.service_account import Credentials
+from google.oauth2.credentials import Credentials as UserCredentials
+from google.oauth2.service_account import Credentials as ServiceAccountCredentials
+from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 
+def _build_credentials() -> (
+    ServiceAccountCredentials | UserCredentials
+):
+    """Build credentials from env vars — OAuth 2.0 first, then service account."""
+    client_id = os.getenv('GOOGLE_CLIENT_ID', '')
+    client_secret = os.getenv('GOOGLE_CLIENT_SECRET', '')
+    refresh_token = os.getenv('GOOGLE_REFRESH_TOKEN', '')
+
+    # OAuth 2.0 (preferred — no service account key needed)
+    if client_id and client_secret and refresh_token:
+        creds = UserCredentials(
+            token=None,
+            refresh_token=refresh_token,
+            token_uri='https://oauth2.googleapis.com/token',
+            client_id=client_id,
+            client_secret=client_secret,
+            scopes=SCOPES,
+        )
+        creds.refresh(Request())
+        return creds
+
+    # Service account from JSON env var (Streamlit Cloud secrets)
+    creds_json = os.getenv('GOOGLE_CREDENTIALS_JSON', '')
+    if creds_json:
+        import json as _json
+        info = _json.loads(creds_json)
+        return ServiceAccountCredentials.from_service_account_info(
+            info, scopes=SCOPES
+        )
+
+    # Service account from file (local dev)
+    creds_path = os.getenv('GOOGLE_CREDENTIALS_PATH', 'credentials.json')
+    if os.path.exists(creds_path):
+        return ServiceAccountCredentials.from_service_account_file(
+            creds_path, scopes=SCOPES
+        )
+
+    raise ValueError(
+        'No Google credentials configured. Set GOOGLE_CLIENT_ID + '
+        'GOOGLE_CLIENT_SECRET + GOOGLE_REFRESH_TOKEN for OAuth 2.0, '
+        'or GOOGLE_CREDENTIALS_JSON (JSON string), '
+        'or provide a service account JSON at GOOGLE_CREDENTIALS_PATH.'
+    )
+
+
 class SheetsBackend:
-    def __init__(self, sheet_id: str, credentials_path: str) -> None:
+    def __init__(self, sheet_id: str) -> None:
         if not sheet_id:
             raise ValueError('PRICE_LIST_SHEET_ID is not configured')
-        if not credentials_path or not os.path.exists(credentials_path):
-            raise ValueError(
-                f'Service account key not found: {credentials_path}'
-            )
         self.sheet_id = sheet_id
-        self.creds = Credentials.from_service_account_file(
-            credentials_path, scopes=SCOPES
-        )
+        self.creds = _build_credentials()
         self.service = build('sheets', 'v4', credentials=self.creds)
 
     def _read_range(self, range_name: str) -> list[list[str]]:
@@ -67,7 +106,7 @@ class SheetsBackend:
         rows = self._read_range(f'{tab}!A2:A{max_rows}')
         for i, row in enumerate(rows):
             if row and row[0] == row_id:
-                return i + 2  # 1-based row number in Sheets
+                return i + 2
         return None
 
     # ---- Sections ----
@@ -103,7 +142,7 @@ class SheetsBackend:
     # ---- Brands ----
 
     def get_brands(self, section_id: str | None = None) -> list[dict]:
-        rows = self._read_range('brands!A2:H50')
+        rows = self._read_range('brands!A2:I50')
         result = []
         for row in rows:
             if not row:
@@ -120,7 +159,7 @@ class SheetsBackend:
                 if len(row) > 6 and row[6] else False,
                 'column_headers': json.loads(row[7])
                 if len(row) > 7 and row[7] else [],
-                'price_col_indices': json.loads(row[7 + 1])
+                'price_col_indices': json.loads(row[8])
                 if len(row) > 8 and row[8] else [],
             }
             if section_id is None or brand['section_id'] == section_id:
@@ -185,7 +224,6 @@ class SheetsBackend:
                 'visible': row[8].upper() == 'TRUE'
                 if len(row) > 8 and row[8] else True,
             }
-            # Filters
             if brand_id and product['brand_id'] != brand_id:
                 continue
             if visible_only and not product['visible']:
@@ -253,21 +291,14 @@ class SheetsBackend:
 
     # ---- Batch operations ----
 
-    def batch_update_prices(
-        self, updates: list[dict]
-    ) -> None:
-        """updates: list of {id, price_1, price_2}"""
+    def batch_update_prices(self, updates: list[dict]) -> None:
         for u in updates:
             row_num = self._find_row('products', 0, str(u['id']))
             if row_num is None:
                 continue
             values = [
                 [str(u['price_1'])],
-                [
-                    str(u['price_2'])
-                    if u.get('price_2') is not None
-                    else ''
-                ],
+                [str(u['price_2']) if u.get('price_2') is not None else ''],
             ]
             self._write_range(f'products!E{row_num}:F{row_num}', values)
 
@@ -276,10 +307,7 @@ class SheetsBackend:
     ) -> None:
         self._clear_range(f'{tab}!A2:Z1000')
         if rows:
-            self._write_range(
-                f'{tab}!A2',
-                rows,
-            )
+            self._write_range(f'{tab}!A2', rows)
 
     # ---- Markup log ----
 

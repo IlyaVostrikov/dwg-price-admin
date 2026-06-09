@@ -1,0 +1,64 @@
+{% for s in sections %}
+<section class="section" id="{{ s.id }}">
+<div class="section-head" onclick="toggleSection(this)">
+{% set simg = section_images.get(s.id, '') %}
+{% if simg %}<img class="section-img" src="{{ simg }}" alt="{{ s.title_ru }}" loading="lazy"/>{% endif %}
+<h2>{{ s.title_ru }}</h2>
+<div class="section-chevron">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5.5 3L10.5 8L5.5 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+</div>
+<div class="section-brands">
+
+{% for b in brands if b.section_id == s.id %}
+{% set prods = products_by_brand.get(b.id, []) %}
+<article class="brand-card" data-brand="{{ b.id }}">
+<div class="brand-card-head" onclick="toggleBrand(this)">
+<div>
+<h3>{{ b.title_ru }}</h3>
+{% if b.subtitle_ru %}
+<p>{{ b.subtitle_ru }}</p>
+{% endif %}
+</div>
+<div style="display:flex;align-items:center;gap:10px;">
+<div class="count">{{ prods|length }}<span>поз.</span></div>
+<div class="brand-chevron">
+<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5.5 3L10.5 8L5.5 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+</div>
+</div>
+<div class="table-wrap">
+<table class="price-table">
+<thead><tr>
+<th class="check-col"></th>
+<th class="name-col">НАИМЕНОВАНИЕ</th>
+{% for key in b.attr_keys %}
+<th>{{ key }}</th>
+{% endfor %}
+{% for pi in b.price_col_indices %}
+{% set h = b.column_headers[pi] %}
+<th>{{ h }}</th>
+{% endfor %}
+</tr></thead>
+<tbody>
+{% for p in prods %}
+<tr data-product-id="{{ p.id }}" data-brand="{{ b.id }}" data-name="{{ p.name_ru }}" data-price="{{ p.price_1_fmt }}" data-section="{{ s.title_ru }}" data-brand-title="{{ b.title_ru }}">
+<td class="check-col"><input type="checkbox" onchange="onCheckbox(this)"/></td>
+<td>{{ p.name_ru }}</td>
+{% for key in b.attr_keys %}
+<td>{{ p.attrs.get(key, '') }}</td>
+{% endfor %}
+<td class="price-col">{{ p.price_1_fmt }}</td>
+{% if b.has_dual_pricing and b.price_col_indices|length >= 2 %}
+<td class="price-col">{{ p.price_2_fmt }}</td>
+{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</article>
+{% endfor %}
+</div>
+</section>
+{% endfor %}

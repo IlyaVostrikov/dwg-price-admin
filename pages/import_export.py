@@ -2,18 +2,10 @@ import os
 from datetime import datetime
 
 import streamlit as st
-from dotenv import load_dotenv
 
-load_dotenv()
-
+from pages._shared import get_backend
 from generator import generate_html
 from parser import import_to_db
-from db import SqliteBackend
-
-
-@st.cache_resource
-def get_backend() -> SqliteBackend:
-    return SqliteBackend(os.getenv('DB_PATH', 'pricelist.db'))
 
 
 st.title('Импорт / Экспорт')

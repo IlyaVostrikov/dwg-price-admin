@@ -1,0 +1,11 @@
+<div class="nav-wrap">
+<nav class="nav">
+{% for s in sections %}
+<a href="#{{ s.id }}">
+  {% set simg = section_images.get(s.id, '') %}
+  {% if simg %}<img class="nav-icon" src="{{ simg }}" alt="{{ s.title_ru }}"/>{% endif %}
+  {{ s.title_ru }}
+</a>
+{% endfor %}
+</nav>
+</div>

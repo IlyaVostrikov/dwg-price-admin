@@ -1,16 +1,6 @@
-import os
-
 import streamlit as st
-from dotenv import load_dotenv
 
-load_dotenv()
-
-from db import SqliteBackend
-
-
-@st.cache_resource
-def get_backend() -> SqliteBackend:
-    return SqliteBackend(os.getenv('DB_PATH', 'pricelist.db'))
+from pages._shared import get_backend
 
 
 st.title('Каталог товаров')

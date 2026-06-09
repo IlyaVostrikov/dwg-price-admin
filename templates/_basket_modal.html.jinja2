@@ -1,0 +1,48 @@
+<!-- Basket -->
+<div class="basket" id="basket">
+  <div class="basket-count" id="basketCount">0</div>
+  <div class="basket-info">
+    <div class="basket-label" id="basketLabel">Ничего не выбрано</div>
+    <div class="basket-hint">Отметьте товары на дегустацию</div>
+  </div>
+  <button class="basket-btn" onclick="openOrderModal()" id="basketBtn" disabled>Отправить</button>
+  <button class="basket-clear" onclick="clearSelection()" title="Очистить">&#10005;</button>
+</div>
+
+<!-- Order Modal -->
+<div class="modal-overlay" id="orderModal">
+<div class="modal">
+<h3>Заказ на дегустацию</h3>
+<p class="modal-sub" id="modalCount">Выбрано товаров: 0</p>
+<form onsubmit="submitOrder(event)">
+<div class="field">
+<label for="clientName">Имя</label>
+<input type="text" id="clientName" required placeholder="Иван Петров"/>
+<div class="error-text" id="nameError">Введите имя</div>
+</div>
+<div class="field">
+<label for="clientCompany">Компания</label>
+<input type="text" id="clientCompany" required placeholder="ООО Кофейня"/>
+<div class="error-text" id="companyError">Введите название компании</div>
+</div>
+<div class="field">
+<label for="clientPhone">Телефон</label>
+<input type="tel" id="clientPhone" required placeholder="+7 999 123-45-67"/>
+<div class="error-text" id="phoneError">Введите телефон</div>
+</div>
+<div class="field">
+<label for="clientNote">Комментарий (необязательно)</label>
+<textarea id="clientNote" placeholder="Когда удобно провести дегустацию? Особые пожелания..."></textarea>
+</div>
+<div class="modal-actions">
+<button type="button" class="modal-btn-secondary" onclick="closeOrderModal()">Отмена</button>
+<button type="submit" class="modal-btn-primary">Скачать заказ</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Success Toast -->
+<div class="success-toast" id="successToast">
+  Файл заказа скачан. Отправьте его менеджеру.
+</div>

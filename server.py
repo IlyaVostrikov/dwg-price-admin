@@ -1,4 +1,4 @@
-"""Flask server for public price list — reads SQLite and renders HTML."""
+"""Flask server for public price list — reads DB and renders HTML."""
 
 import os
 
@@ -7,14 +7,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from generator import generate_html, SqliteBackend
+from generator import generate_html
+from backend_factory import get_backend as _get_backend
 
 app = Flask(__name__)
 
 
-def get_backend() -> SqliteBackend:
-    db_path = os.getenv("DB_PATH", "pricelist.db")
-    return SqliteBackend(db_path, read_only=True)
+def get_backend():
+    backend = _get_backend()
+    # SqliteBackend supports read_only mode for extra safety on Vercel
+    if hasattr(backend, 'read_only'):
+        backend.read_only = True
+    return backend
 
 
 # Cache HTML in memory (module-level, lives for serverless function duration)

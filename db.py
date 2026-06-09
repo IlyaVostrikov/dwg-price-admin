@@ -67,16 +67,6 @@ class SqliteBackend:
         ''')
         self._conn.commit()
 
-    # ---- Helpers ----
-
-    def _row_to_dict(self, row: sqlite3.Row | None) -> dict | None:
-        if row is None:
-            return None
-        return dict(row)
-
-    def _rows_to_dicts(self, rows: list[sqlite3.Row]) -> list[dict]:
-        return [dict(r) for r in rows]
-
     # ---- Sections ----
 
     def get_sections(self) -> list[dict]:

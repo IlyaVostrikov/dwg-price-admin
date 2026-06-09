@@ -1,0 +1,11 @@
+<section class="summary" style="--summary-cols: {{ sections|length }}; --summary-cols-desktop: {% if sections|length > 5 %}5{% else %}{{ sections|length }}{% endif %};">
+{% for s in sections %}
+{% set count = counts.get(s.id, 0) %}
+{% set simg = section_images.get(s.id, '') %}
+<div class="summary-card">
+{% if simg %}<img class="summary-img" src="{{ simg }}" alt="{{ s.title_ru }}" loading="lazy"/>{% endif %}
+<strong>{{ count }}</strong>
+<span>{{ s.title_ru }}</span>
+</div>
+{% endfor %}
+</section>
